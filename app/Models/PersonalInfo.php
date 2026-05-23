@@ -17,7 +17,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
     'national_code',
     'phone',
     'address',
-    'postal_code')]
+    'postal_code',
+    'personal_image',
+    'last_degree',
+)]
 class PersonalInfo extends Model
 {
     public function user(): BelongsTo

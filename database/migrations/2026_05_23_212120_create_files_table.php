@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->string('extension');
             $table->string('mime_type')->nullable(); // مثال: image/jpeg, application/pdf
             $table->unsignedBigInteger('size')->nullable(); // اندازه فایل بر حسب بایت
+            $table->string('disk')->nullable();
             $table->timestamps();
         });
     }

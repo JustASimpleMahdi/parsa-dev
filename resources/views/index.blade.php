@@ -20,8 +20,12 @@
             <a href="#about-company">درباره ما</a>
             <div class="auth-buttons" id="authButtonsContainer">
                 @auth
-                    <button class="btn-logout" id="logoutBtn">🚪 {{ auth()->user()->personal_info->fullname }} | خروج
-                    </button>
+                    <form action="{{ route('logout') }}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn-logout" id="logoutBtn">🚪 {{ auth()->user()->personal_info->fullname }} | خروج
+                        </button>
+                    </form>
                 @else
                     <a href="{{ route('login') }}" class="btn-login">ورود</a>
                     <a href="{{ route('register') }}" class="btn-register">ثبت نام</a>

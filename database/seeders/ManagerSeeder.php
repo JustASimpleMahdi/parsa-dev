@@ -22,7 +22,7 @@ class ManagerSeeder extends Seeder
             'register_status' => RegisterStatusEnum::PERSONAL_INFO
         ]);
 
-        $user->personalInfo()->create([
+        $user->personal_info()->create([
             'firstname' => 'محمد',
             'lastname' => 'ایرانی',
             'father_name' => 'نمیدونم',
