@@ -2,21 +2,33 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\RegisterStatusEnum;
+use App\RoleEnum;
 use Database\Factories\UserFactory;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password'])]
+
+#[Fillable(['username', 'password', 'role', 'register_status'])]
 #[Hidden(['password', 'remember_token'])]
-class User extends Authenticatable
+class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
+    use Authenticatable, Authorizable;
 
+    public function personal_info(): HasOne
+    {
+        return $this->hasOne(PersonalInfo::class);
+    }
     /**
      * Get the attributes that should be cast.
      *
@@ -25,8 +37,9 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'role' => RoleEnum::class,
+            'register_status' => RegisterStatusEnum::class,
         ];
     }
 }
