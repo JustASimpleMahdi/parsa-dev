@@ -26,4 +26,11 @@ class FileService
             'disk' => $disk,
         ]);
     }
+
+    public static function remove(File $file): void
+    {
+        if (Storage::disk($file->disk)->exists($file->path)) {
+            Storage::disk($file->disk)->delete($file->path);
+        }
+    }
 }

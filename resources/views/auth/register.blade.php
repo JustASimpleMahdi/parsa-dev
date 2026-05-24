@@ -114,56 +114,65 @@
         <form action="{{ route('register-submit') }}" method="post" enctype="multipart/form-data"
               class="form-container">
             @csrf
-            {{ $errors }}
+            @php($user = auth()->user())
             <div class="auth-form">
                 <div class="form-row">
-                    <div class="form-group"><label>نام :</label><input name="firstname" value="{{ old('firstname') }}"
+                    <div class="form-group"><label>نام :</label><input name="firstname"
+                                                                       value="{{ old('firstname',$user?->personal_info->firstname) }}"
                                                                        type="text" id="regName" placeholder="نام"></div>
                     <div class="form-group"><label>نام خانوادگی :</label><input name="lastname"
-                                                                                value="{{ old('lastname') }}"
+                                                                                value="{{ old('lastname',$user?->personal_info->lastname) }}"
                                                                                 type="text" id="regFamily"
                                                                                 placeholder="نام خانوادگی"></div>
                 </div>
                 <div class="form-row">
                     <div class="form-group"><label>نام پدر :</label><input name="father_name"
-                                                                           value="{{ old('father_name') }}" type="text"
+                                                                           value="{{ old('father_name',$user?->personal_info->father_name) }}"
+                                                                           type="text"
                                                                            id="regFatherName" placeholder="نام پدر">
                     </div>
                     <div class="form-group"><label>تاریخ تولد :</label><input name="birthdate"
-                                                                              value="{{ old('birthdate') }}" type="text"
+                                                                              value="{{ old('birthdate',$user?->personal_info->birthdate) }}"
+                                                                              type="text"
                                                                               placeholder="1382/01/01"
                                                                               id="regBirthDate"></div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group"><label>شماره تلفن :</label><input name="phone" value="{{ old('phone') }}"
+                    <div class="form-group"><label>شماره تلفن :</label><input name="phone"
+                                                                              value="{{ old('phone',$user?->personal_info->phone) }}"
                                                                               type="tel" id="regPhone"
                                                                               placeholder="۰۹۱۲۳۴۵۶۷۸۹"></div>
                     <div class="form-group"><label>شماره شناسنامه :</label><input name="id_number"
-                                                                                  value="{{ old('id_number') }}"
+                                                                                  value="{{ old('id_number',$user?->personal_info->id_number) }}"
                                                                                   type="text" id="regIdNumber"
                                                                                   placeholder="شماره شناسنامه"></div>
                 </div>
                 <div class="form-row">
                     <div class="form-group"><label>کد ملی :</label><input name="national_code"
-                                                                          value="{{ old('national_code') }}" type="text"
+                                                                          value="{{ old('national_code',$user?->personal_info->national_code) }}"
+                                                                          type="text"
                                                                           id="regNationalCode"
                                                                           placeholder="کد ملی ۱۰ رقمی"></div>
                     <div class="form-group"><label>محل تولد :</label><input name="birthplace"
-                                                                            value="{{ old('birthplace') }}" type="text"
+                                                                            value="{{ old('birthplace',$user?->personal_info->birthplace) }}"
+                                                                            type="text"
                                                                             id="regBirthPlace"
                                                                             placeholder="شهر محل تولد"></div>
                 </div>
                 <div class="form-group"><label>آدرس محل سکونت :</label><input name="address"
-                                                                              value="{{ old('address') }}" type="text"
+                                                                              value="{{ old('address',$user?->personal_info->address) }}"
+                                                                              type="text"
                                                                               id="regAddress" placeholder="آدرس کامل">
                 </div>
                 <div class="form-row">
                     <div class="form-group"><label>کد پستی :</label><input name="postal_code"
-                                                                           value="{{ old('postal_code') }}" type="text"
+                                                                           value="{{ old('postal_code',$user?->personal_info->postal_code) }}"
+                                                                           type="text"
                                                                            id="regPostalCode"
                                                                            placeholder="کد پستی ۱۰ رقمی"></div>
                     <div class="form-group"><label>نام کاربری :</label><input name="username"
-                                                                              value="{{ old('username') }}" type="text"
+                                                                              value="{{ old('username',$user?->username) }}"
+                                                                              type="text"
                                                                               id="regUsername" placeholder="نام کاربری">
                     </div>
                 </div>

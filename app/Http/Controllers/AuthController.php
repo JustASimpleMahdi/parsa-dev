@@ -61,6 +61,7 @@ class AuthController extends Controller
 
     public function registerSubmit(Request $request)
     {
+        $user = auth()->user();
         $validated = $request->validate([
             'firstname' => 'required',
             'lastname' => 'required',
@@ -68,40 +69,65 @@ class AuthController extends Controller
             'birthdate' => 'required|regex:/^\d{4}\/\d{2}\/\d{2}$/',
             'birthplace' => 'required',
             'id_number' => 'required',
-            'national_code' => 'required|unique:personal_infos,national_code',
-            'phone' => 'required|unique:personal_infos,phone',
+            'national_code' => "required|unique:personal_infos,national_code,{$user?->personal_info->id}",
+            'phone' => "required|unique:personal_infos,phone,{$user?->personal_info->id}",
             'address' => 'required',
             'postal_code' => 'required',
-            'username' => 'required|unique:users,username',
-            'password' => 'required|min:4|confirmed',
-            'personal_image' => 'file|image|max:2048',
-            'last_degree' => 'file|mimes:jpg,jpeg,png,webp,pdf|max:2048',
+            'username' => "required|unique:users,username,{$user?->id}",
+            'password' => (!$user ? 'required|' : 'nullable|') . 'min:4|confirmed',
+            'personal_image' => (!$user ? 'required|' : 'nullable|') . 'file|image|max:2048',
+            'last_degree' => (!$user ? 'required|' : 'nullable|') . 'file|mimes:jpg,jpeg,png,webp,pdf|max:2048',
         ]);
-        $user = DB::transaction(function () use ($validated, $request) {
-            $user = User::create([
-                'username' => $validated['username'],
-                'password' => $validated['password'],
-                'register_status' => RegisterStatusEnum::PERSONAL_INFO
-            ]);
-            unset($validated['username']);
-            unset($validated['password']);
+        if ($user) {
+            DB::transaction(function () use ($validated, $user) {
+                $update = [
+                    'username' => $validated['username'],
+                ];
+                if (isset($validated['password']) && $validated['password']) {
+                    $update['password'] = $validated['password'];
+                }
+                $user->update($update);
+                unset($validated['username']);
+                unset($validated['password']);
 
-            $personalImage = FileService::upload($request->file('personal_image'), path: 'personal_image', public: true);
+                if (isset($validated['personal_image']) && $validated['personal_image']) {
+                    FileService::remove($user->personal_info->personal_image);
+                    $personalImage = FileService::upload($validated['personal_image'], path: 'personal_image', public: true);
+                    $validated['personal_image'] = $personalImage->id;
+                }
+                if (isset($validated['last_degree']) && $validated['last_degree']) {
+                    FileService::remove($user->personal_info->last_degree);
+                    $lastDegree = FileService::upload($validated['last_degree'], path: 'last_degree');
+                    $validated['last_degree'] = $lastDegree->id;
+                }
+
+                $user->personal_info()->update($validated);
+            });
+        } else {
+            $user = DB::transaction(function () use ($validated, $request) {
+                $user = User::create([
+                    'username' => $validated['username'],
+                    'password' => $validated['password'],
+                    'register_status' => RegisterStatusEnum::PERSONAL_INFO
+                ]);
+                unset($validated['username']);
+                unset($validated['password']);
+
+                $personalImage = FileService::upload($validated['personal_image'], path: 'personal_image', public: true);
+                $validated['personal_image'] = $personalImage->id;
+
+                $lastDegree = FileService::upload($validated['last_degree'], path: 'last_degree');
+                $validated['last_degree'] = $lastDegree->id;
 
 
-            $lastDegree = FileService::upload($request->file('last_degree'), path: 'last_degree');
+                $user->personal_info()->create($validated);
 
+                return $user;
+            });
+            Auth::login($user, true);
+        }
 
-            $user->personal_info()->create([
-                ...$validated,
-                'personal_image' => $personalImage->id,
-                'last_degree' => $personalImage->id,
-            ]);
-            return $user;
-        });
-        Auth::login($user, true);
-        // TODO: Redirect to upload resume
-        return redirect()->route('index');
+        return redirect()->route('register.resume');
     }
 
     public function login()
