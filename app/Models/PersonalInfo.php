@@ -23,6 +23,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 )]
 class PersonalInfo extends Model
 {
+    protected $primaryKey = 'user_id';
+    public $incrementing = false;
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

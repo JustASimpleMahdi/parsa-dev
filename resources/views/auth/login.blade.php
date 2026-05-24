@@ -214,6 +214,9 @@
                     <div class="forgot-link">
                         <a id="forgotPasswordLink">فراموشی رمز عبور</a>
                     </div>
+                    <div class="forgot-link">
+                        <a href="{{ route('register') }}" id="forgotPasswordLink">ثبت نام</a>
+                    </div>
                 </div>
 
                 <button id="doLoginBtn">ورود به داشبورد</button>

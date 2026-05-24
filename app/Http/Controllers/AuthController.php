@@ -6,6 +6,7 @@ use App\Models\ResumeFile;
 use App\Models\User;
 use App\RegisterStatusEnum;
 use App\Services\FileService;
+use App\UploadPathEnum;
 use Auth;
 use DB;
 use Illuminate\Http\Request;
@@ -23,15 +24,15 @@ class AuthController extends Controller
 
         DB::transaction(function () use ($validated) {
             $user = auth()->user();
-            $resume = $user->resume()->updateOrCreate([], ['text' => $validated['resume_text']]);
+            $resume = $user->resume()->create(['text' => $validated['resume_text']]);
 
             collect($validated['resume_files'])
-                ->map(fn($uploadedFile) => FileService::upload($uploadedFile, 'resume'))
-                ->each(fn($file) => ResumeFile::create(['file_id' => $file->id, 'resume_id' => $resume->id]));
-
+                ->map(fn($uploadedFile) => FileService::upload($uploadedFile, UploadPathEnum::RESUME->value))
+                ->each(fn($file) => ResumeFile::create(['file_id' => $file->id, 'resume_user_id' => $resume->user_id]));
 
             $user->update(['register_status' => RegisterStatusEnum::COMPLETE]);
         });
+
         return redirect()->route('job-requested');
     }
 
@@ -69,8 +70,8 @@ class AuthController extends Controller
             'birthdate' => 'required|regex:/^\d{4}\/\d{2}\/\d{2}$/',
             'birthplace' => 'required',
             'id_number' => 'required',
-            'national_code' => "required|unique:personal_infos,national_code,{$user?->personal_info->id}",
-            'phone' => "required|unique:personal_infos,phone,{$user?->personal_info->id}",
+            'national_code' => "required|unique:personal_infos,national_code,{$user?->id},user_id",
+            'phone' => "required|unique:personal_infos,phone,{$user?->id},user_id",
             'address' => 'required',
             'postal_code' => 'required',
             'username' => "required|unique:users,username,{$user?->id}",
@@ -92,12 +93,12 @@ class AuthController extends Controller
 
                 if (isset($validated['personal_image']) && $validated['personal_image']) {
                     FileService::remove($user->personal_info->personal_image);
-                    $personalImage = FileService::upload($validated['personal_image'], path: 'personal_image', public: true);
+                    $personalImage = FileService::upload($validated['personal_image'], path: UploadPathEnum::PERSONAL_IMAGE->value, public: true);
                     $validated['personal_image'] = $personalImage->id;
                 }
                 if (isset($validated['last_degree']) && $validated['last_degree']) {
                     FileService::remove($user->personal_info->last_degree);
-                    $lastDegree = FileService::upload($validated['last_degree'], path: 'last_degree');
+                    $lastDegree = FileService::upload($validated['last_degree'], path: UploadPathEnum::LAST_DEGREE->value);
                     $validated['last_degree'] = $lastDegree->id;
                 }
 
@@ -113,10 +114,10 @@ class AuthController extends Controller
                 unset($validated['username']);
                 unset($validated['password']);
 
-                $personalImage = FileService::upload($validated['personal_image'], path: 'personal_image', public: true);
+                $personalImage = FileService::upload($validated['personal_image'], path: UploadPathEnum::PERSONAL_IMAGE->value, public: true);
                 $validated['personal_image'] = $personalImage->id;
 
-                $lastDegree = FileService::upload($validated['last_degree'], path: 'last_degree');
+                $lastDegree = FileService::upload($validated['last_degree'], path: UploadPathEnum::LAST_DEGREE->value);
                 $validated['last_degree'] = $lastDegree->id;
 
 

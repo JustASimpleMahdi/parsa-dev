@@ -12,8 +12,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('resumes', function (Blueprint $table) {
-            $table->id();
-            $table->foreignIdFor(User::class)->unique()->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(User::class)->primary()->constrained()->cascadeOnDelete();
             $table->text('text');
             $table->timestamps();
         });
