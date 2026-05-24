@@ -20,6 +20,9 @@
             <a href="#about-company">درباره ما</a>
             <div class="auth-buttons" id="authButtonsContainer">
                 @auth
+                    @if(auth()->user()->register_status !== \App\RegisterStatusEnum::COMPLETE)
+                        <a href="{{ route('register.resume') }}" class="btn-register">ادامه ثبت نام</a>
+                    @endif
                     <form action="{{ route('logout') }}" method="post">
                         @csrf
                         @method('DELETE')

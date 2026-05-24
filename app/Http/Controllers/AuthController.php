@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ResumeFile;
 use App\Models\User;
 use App\RegisterStatusEnum;
 use App\Services\FileService;
@@ -11,6 +12,34 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
+
+    public function storeResumeAndJobRequest(Request $request)
+    {
+        $validated = $request->validate([
+            'resume_files' => 'required|array',
+            'resume_files.*' => 'file|mimes:jpg,jpeg,png,doc,docx,pdf|max:2048',
+            'resume_text' => 'required',
+        ]);
+
+        DB::transaction(function () use ($validated) {
+            $user = auth()->user();
+            $resume = $user->resume()->updateOrCreate([], ['text' => $validated['resume_text']]);
+
+            collect($validated['resume_files'])
+                ->map(fn($uploadedFile) => FileService::upload($uploadedFile, 'resume'))
+                ->each(fn($file) => ResumeFile::create(['file_id' => $file->id, 'resume_id' => $resume->id]));
+
+
+            $user->update(['register_status' => RegisterStatusEnum::COMPLETE]);
+        });
+        return redirect()->route('job-requested');
+    }
+
+    public function registerResume()
+    {
+        return view('auth.resume');
+    }
+
     public function loginSubmit(Request $request)
     {
         $validated = $request->validate([

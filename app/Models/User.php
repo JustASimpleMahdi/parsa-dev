@@ -25,10 +25,16 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     use HasFactory, Notifiable;
     use Authenticatable, Authorizable;
 
+    public function resume(): HasOne
+    {
+        return $this->hasOne(Resume::class);
+    }
+
     public function personal_info(): HasOne
     {
         return $this->hasOne(PersonalInfo::class);
     }
+
     /**
      * Get the attributes that should be cast.
      *
