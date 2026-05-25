@@ -10,6 +10,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 #[Fillable('title', 'description', 'capacity', 'hired')]
 class JobOpportunity extends Model
 {
+
+    protected function isFull(): Attribute
+    {
+        return Attribute::get(fn() => $this->capacity === $this->hired);
+    }
     public function job_requests(): HasMany
     {
         return $this->hasMany(JobRequest::class);

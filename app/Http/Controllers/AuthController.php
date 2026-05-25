@@ -40,12 +40,17 @@ class AuthController extends Controller
             'delete_resume_files.*' => 'required|exists:files,id',
             'new_resume_files' => 'array',
             'new_resume_files.*' => 'required|file|mimes:jpg,jpeg,png,webp,pdf|max:2048',
+            'job_opportunities' => 'required|array|min:1',
+            'job_opportunities.*' => 'required|exists:job_opportunities,id',
         ]);
         DB::transaction(function () use ($validated, $user) {
             $validated = collect($validated);
             $userValidated = $validated->only(['username', 'password']);
             $resumeValidated = $validated->only(['resume_text', 'new_resume_files', 'delete_resume_files']);
-            $personalInfoValidated = $validated->except($userValidated->merge($resumeValidated)->keys()->toArray());
+            $jobRequestValidated = $validated->only('job_opportunities');
+            $personalInfoValidated = $validated->except(
+                $userValidated->merge($resumeValidated)->merge($jobRequestValidated)
+                    ->keys()->toArray());
 
             $update['username'] = $userValidated['username'];
             if ($userValidated->has('password') && $userValidated['password']) {
@@ -75,6 +80,13 @@ class AuthController extends Controller
             collect($resumeValidated->get('new_resume_files', []))
                 ->map(fn($uploadedFile) => FileService::upload($uploadedFile, UploadPathEnum::RESUME->value))
                 ->each(fn($file) => ResumeFile::create(['file_id' => $file->id, 'resume_user_id' => $user->id]));
+
+            $newJobRequests = collect($jobRequestValidated['job_opportunities'])
+                ->diff($user->job_requests->pluck('job_opportunity_id'));
+
+            $user->job_requests()->whereNotIn('job_opportunity_id', $jobRequestValidated['job_opportunities'])->delete();
+            $user->job_requests()->createMany($newJobRequests->map(fn($jobOpportunityId) => ['job_opportunity_id' => $jobOpportunityId]));
+
         });
         return redirect()->route('job-requested.info');
     }
@@ -86,7 +98,8 @@ class AuthController extends Controller
 
     public function editInformation()
     {
-        return view('auth.edit');
+        $jobOpportunities = JobOpportunity::all();
+        return view('auth.edit', compact('jobOpportunities'));
     }
 
     public function storeResumeAndJobRequest(Request $request)

@@ -845,6 +845,19 @@ $user = auth()->user();
                     @endforeach
                 </div>
             </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>💼</span>
+                        <span>درخواست های شغلی :</span>
+                    </div>
+                    <div class="card-value">
+                        @foreach($user->job_requests as $jobRequest)
+                            {{ $jobRequest->job_opportunity->title }}<br>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- دکمه ویرایش -->

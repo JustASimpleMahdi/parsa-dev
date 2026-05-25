@@ -861,6 +861,52 @@ $user = auth()->user();
                     <div class="file-name-display" id="fileNameDisplay"></div>
                 </div>
 
+                <div class="card" style="padding-bottom: 20px;">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span>💼</span>
+                            <span>فرصت های شغلی :</span>
+                        </div>
+                    </div>
+                    <div id="jobCheckListContainer" class="job-check-list">
+                        @foreach($jobOpportunities as $jobOpportunity)
+                            @php($isRequested = $user->job_requests->pluck('job_opportunity_id')->contains($jobOpportunity->id))
+
+                            @if($isRequested || !$jobOpportunity->is_full)
+                                <label class="job-check-item">
+                                        <span class="custom-circle-check">
+                                            <input name="job_opportunities[]" type="checkbox"
+                                                   class="job-circle-checkbox"
+                                                   value="{{ $jobOpportunity->id }}" {{ $isRequested ? 'checked' : '' }}>
+                                            <span class="circle-mark"></span>
+                                        </span>
+                                    <span
+                                        style="display: flex; justify-content: space-between; align-items: center; width: 100%; cursor: pointer;">
+                                            <span style="color: #FFFFFF;">{{ $jobOpportunity->title }}</span>
+                                            <span style="color:#27ECAB; font-size: 0.85rem;"> ({{ $jobOpportunity->remaining_capacity }} ظرفیت)</span>
+                                        </span>
+                                </label>
+
+                            @else
+                                <label class="job-check-item">
+                                        <span class="custom-circle-check" style="opacity:0.5; cursor:not-allowed;">
+                                            <input type="checkbox" disabled>
+                                            <span class="circle-mark"
+                                                  style="background-color:#64748B; border-color:#475569;"></span>
+                                        </span>
+                                    <span
+                                        style="cursor:default; display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                            <span
+                                                style="font-size: 1.05rem; font-weight: 600; color: #FFFFFF;">{{ $jobOpportunity->title }}</span>
+                                            <span class="job-full-badge"
+                                                  style="font-size: 1rem; font-weight: 600; background: transparent; padding: 0;"><i
+                                                    class="fas fa-ban"></i> ظرفیت تکمیل شد</span>
+                                        </span>
+                                </label>
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
             </div>
 
 
