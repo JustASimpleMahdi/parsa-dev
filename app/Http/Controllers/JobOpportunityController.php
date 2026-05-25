@@ -27,23 +27,16 @@ class JobOpportunityController extends Controller
      */
     public function create()
     {
-        return view('manager.job-opportunies.create');
+        return view('manager.job-opportunities.create');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(JobOpportunity $jobOpportunity)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(JobOpportunity $jobOpportunity)
     {
-        //
+        return view('manager.job-opportunities.edit', compact('jobOpportunity'));
     }
 
     /**
@@ -51,7 +44,14 @@ class JobOpportunityController extends Controller
      */
     public function update(Request $request, JobOpportunity $jobOpportunity)
     {
-        //
+        $minCapacity = max($jobOpportunity->hired, 1);
+        $validated = $request->validate([
+            'title' => 'required|max:255',
+            'description' => 'required',
+            'capacity' => "required|integer|min:$minCapacity",
+        ]);
+        $jobOpportunity->update($validated);
+        return redirect()->route('manager.index');
     }
 
     /**
