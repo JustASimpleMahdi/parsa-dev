@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\JobOpportunity;
+
 class ManagerController extends Controller
 {
     public function index()
     {
-        return view('manager.index');
+        $jobOpportunities = JobOpportunity::all();
+
+        return view('manager.index', compact('jobOpportunities'));
     }
 }

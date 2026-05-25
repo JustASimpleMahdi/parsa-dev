@@ -13,19 +13,19 @@
             <div class="card-title">فرصت های شغلی</div>
 
             <div class="jobs-grid-container">
-                {{--<?php foreach ($jobOpportunities as $jobOpportunity) : ?>
-                <div class="job-position-card">
-                    <a href="job-opportunity/delete.php?id=<?= $jobOpportunity->id ?>" class="delete-icon">
-                        <span class="white-rect"></span>
-                    </a>
-                    <div class="position-card"><?= $jobOpportunity->title ?></div>
-                    <div class="description-salary"><?= $jobOpportunity->description ?></div>
-                    <div class="numbers">ظرفیت باقی مانده : <?= $jobOpportunity->capacity - $jobOpportunity->full ?>
-                        از <?= $jobOpportunity->capacity ?></div>
-                    <a href="job-opportunity/update.php?id=<?= $jobOpportunity->id ?>"
-                       class="edit-job-btn">ویرایش</a>
-                </div>
-                <?php endforeach; ?>--}}
+                @foreach($jobOpportunities as $jobOpportunity)
+                    <div class="job-position-card">
+                        <a href="" class="delete-icon">
+                            <span class="white-rect"></span>
+                        </a>
+                        <div class="position-card">{{ $jobOpportunity->title }}</div>
+                        <div class="description-salary">{{ $jobOpportunity->description }}</div>
+                        <div class="numbers">ظرفیت باقی مانده : {{ $jobOpportunity->remaining_capacity }}
+                            از {{ $jobOpportunity->capacity }}</div>
+                        <a href=""
+                           class="edit-job-btn">ویرایش</a>
+                    </div>
+                @endforeach
 
                 <a href="{{ route('manager.job-opportunities.create') }}" class="add-job-card" id="addNewJobBtn">
                     <div class="plus-icon">
