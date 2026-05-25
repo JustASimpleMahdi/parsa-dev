@@ -27,7 +27,7 @@
                 </div>
                 <?php endforeach; ?>--}}
 
-                <a href="" class="add-job-card" id="addNewJobBtn">
+                <a href="{{ route('manager.job-opportunities.create') }}" class="add-job-card" id="addNewJobBtn">
                     <div class="plus-icon">
                         <i class="fas fa-plus"></i>
                     </div>

@@ -2,14 +2,16 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\JobOpportunityController;
 use App\Http\Controllers\ManagerController;
 use App\Http\Middleware\IsManagerMiddleware;
 use App\Http\Middleware\JobNotRequestedMiddleware;
 use App\Http\Middleware\JobRequestedMiddleware;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth', IsManagerMiddleware::class])->group(function () {
-    Route::get('/manager', [ManagerController::class, 'index'])->name('manager.index');
+Route::middleware(['auth', IsManagerMiddleware::class])->prefix('manager')->group(function () {
+    Route::resource('job-opportunities', JobOpportunityController::class)->names('manager.job-opportunities')->except(['show', 'index']);
+    Route::get('/', [ManagerController::class, 'index'])->name('manager.index');
 });
 
 /* Private Files */
