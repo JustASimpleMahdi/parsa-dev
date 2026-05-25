@@ -59,6 +59,7 @@ class JobOpportunityController extends Controller
      */
     public function destroy(JobOpportunity $jobOpportunity)
     {
-        //
+        $jobOpportunity->delete();
+        return redirect()->route('manager.index');
     }
 }
