@@ -570,6 +570,7 @@ a {
     font-weight: 600;
     color: #27ECAB;
     font-size: 0.9rem;
+    white-space: pre-wrap;
 }
 
 .capacity-row {

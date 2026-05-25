@@ -72,7 +72,17 @@
             <i class="fas fa-briefcase"></i>
             <span>فرصت‌های شغلی</span>
         </div>
-        <div class="jobs-grid" id="jobsContainer"></div>
+        <div class="jobs-grid" id="jobsContainer">
+            @foreach($jobOpportunities as $jobOpportunity)
+
+                <div class="job-card">
+                    <div class="job-header"><span class="job-title">{{ $jobOpportunity->title }}</span></div>
+                    <div class="job-salary">{{ $jobOpportunity->description }}</div>
+                    <div class="capacity-row"><span class="capacity-text">ظرفیت باقی‌مانده: {{ $jobOpportunity->remaining_capacity }} از {{$jobOpportunity->capacity}}</span>
+                    </div>
+                </div>
+            @endforeach
+        </div>
     </div>
 
     <div class="container" id="about-company" style="margin-bottom: 50px; scroll-margin-top: 90px;">
@@ -173,9 +183,7 @@
             const remaining = job.capacity - job.hired;
             const card = document.createElement("div");
             card.className = "job-card";
-            card.innerHTML = `<div class="job-header"><span class="job-title">${job.title}</span></div>
-                <div class="job-salary">${job.salary}</div>
-                <div class="capacity-row"><span class="capacity-text">ظرفیت باقی‌مانده: ${remaining} از ${job.capacity}</span></div>`;
+            card.innerHTML = ``;
             container.appendChild(card);
         });
     }

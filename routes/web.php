@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\JobOpportunityController;
+use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\ManagerController;
 use App\Http\Middleware\IsManagerMiddleware;
 use App\Http\Middleware\JobNotRequestedMiddleware;
@@ -43,6 +44,4 @@ Route::middleware('guest')->group(function () {
 });
 Route::delete('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
 
-Route::get('/', function () {
-    return view('index');
-})->name('index');
+Route::get('/', [LandingPageController::class, 'index'])->name('index');
