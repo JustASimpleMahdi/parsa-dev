@@ -10,6 +10,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -33,6 +34,11 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function personal_info(): HasOne
     {
         return $this->hasOne(PersonalInfo::class);
+    }
+
+    protected function fullname(): Attribute
+    {
+        return Attribute::get(fn() => $this->personal_info->firstname . ' ' . $this->personal_info->lastname);
     }
 
     /**
