@@ -2,9 +2,15 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\ManagerController;
+use App\Http\Middleware\IsManagerMiddleware;
 use App\Http\Middleware\JobNotRequestedMiddleware;
 use App\Http\Middleware\JobRequestedMiddleware;
 use Illuminate\Support\Facades\Route;
+
+Route::middleware(['auth', IsManagerMiddleware::class])->group(function () {
+    Route::get('/manager', [ManagerController::class, 'index'])->name('manager.index');
+});
 
 /* Private Files */
 Route::middleware(['auth'])->get('/personal-info/last-degree/{file}', [FileController::class, 'getPersonalInfoLastDegree'])->name('get-file.personal-info.last-degree');

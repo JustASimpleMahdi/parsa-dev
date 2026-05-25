@@ -6,6 +6,7 @@ use App\Models\File;
 use App\Models\ResumeFile;
 use App\Models\User;
 use App\RegisterStatusEnum;
+use App\RoleEnum;
 use App\Services\FileService;
 use App\UploadPathEnum;
 use Auth;
@@ -125,6 +126,17 @@ class AuthController extends Controller
             return back()->withInput()->withErrors(['login' => 'نام کاربری یا رمز عبور اشتباه است.']);
         }
         // TODO: Redirect to right place
+        $user = auth()->user();
+
+        if ($user->role === RoleEnum::MANAGER)
+            return redirect()->route('manager.index');
+
+        if ($user->register_status === RegisterStatusEnum::COMPLETE)
+            return redirect()->route('job-requested');
+
+        if ($user->register_status === RegisterStatusEnum::PERSONAL_INFO)
+            return redirect()->route('register.resume');
+
         return redirect()->route('index');
     }
 

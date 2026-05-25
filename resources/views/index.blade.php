@@ -20,15 +20,20 @@
             <a href="#about-company">درباره ما</a>
             <div class="auth-buttons" id="authButtonsContainer">
                 @auth
-                    @if(auth()->user()->register_status !== \App\RegisterStatusEnum::COMPLETE)
-                        <a href="{{ route('register.resume') }}" class="btn-register">ادامه ثبت نام</a>
+                    @php($user = auth()->user())
+                    @if($user->role === \App\RoleEnum::MANAGER)
+                        <a href="{{ route('manager.index') }}" class="btn-register">مدیریت</a>
                     @else
-                        <a href="{{ route('job-requested') }}" class="btn-register">وضعیت درخواست</a>
+                        @if($user->register_status !== \App\RegisterStatusEnum::COMPLETE)
+                            <a href="{{ route('register.resume') }}" class="btn-register">ادامه ثبت نام</a>
+                        @else
+                            <a href="{{ route('job-requested') }}" class="btn-register">وضعیت درخواست</a>
+                        @endif
                     @endif
                     <form action="{{ route('logout') }}" method="post">
                         @csrf
                         @method('DELETE')
-                        <button class="btn-logout" id="logoutBtn">🚪 {{ auth()->user()->personal_info->fullname }} | خروج
+                        <button class="btn-logout" id="logoutBtn">🚪 {{ $user->personal_info->fullname }} | خروج
                         </button>
                     </form>
                 @else
