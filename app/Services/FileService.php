@@ -15,11 +15,10 @@ class FileService
 
         $path = $file->store($path, $disk);
         $fullPath = Storage::disk($disk)->path($path);
-
         return File::create([
             'path' => $path,
             'name' => FileFacade::name($fullPath),
-            'original_name' => $file->getClientOriginalName(),
+            'original_name' => FileFacade::name($file->getClientOriginalName()),
             'extension' => FileFacade::extension($fullPath),
             'size' => FileFacade::size($fullPath),
             'mime_type' => FileFacade::mimeType($fullPath),

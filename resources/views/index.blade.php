@@ -22,6 +22,8 @@
                 @auth
                     @if(auth()->user()->register_status !== \App\RegisterStatusEnum::COMPLETE)
                         <a href="{{ route('register.resume') }}" class="btn-register">ادامه ثبت نام</a>
+                    @else
+                        <a href="{{ route('job-requested') }}" class="btn-register">وضعیت درخواست</a>
                     @endif
                     <form action="{{ route('logout') }}" method="post">
                         @csrf

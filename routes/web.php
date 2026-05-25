@@ -1,12 +1,17 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FileController;
 use App\Http\Middleware\JobNotRequestedMiddleware;
 use App\Http\Middleware\JobRequestedMiddleware;
 use Illuminate\Support\Facades\Route;
 
+/* Private Files */
+Route::middleware(['auth'])->get('/personal-info/last-degree/{file}', [FileController::class, 'getPersonalInfoLastDegree'])->name('get-file.personal-info.last-degree');
+Route::middleware(['auth'])->get('/resume/file/{file}', [FileController::class, 'getResumeFile'])->name('get-file.resume.file');
 
 Route::middleware('auth')->group(function () {
+    Route::put('/info/edit', [AuthController::class, 'updateInformation'])->name('job-requested.info.edit.update');
     Route::get('/info/edit', [AuthController::class, 'editInformation'])->name('job-requested.info.edit');
     Route::get('/info', [AuthController::class, 'showInformation'])->name('job-requested.info');
     Route::middleware(JobRequestedMiddleware::class)->get('/job/requested', function () {

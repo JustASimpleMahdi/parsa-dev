@@ -733,126 +733,144 @@ $user = auth()->user();
         </a>
     </div>
 
-
-    <div>
-        <div class="info-list">
-            <div class="info-item">
-                <div class="info-label">نام و نام خانوادگی :</div>
-                <div class="info-value">
-                    {{ $user->personal_info->firstname }}
-                    {{ $user->personal_info->lastname }}
-                </div>
-            </div>
-            <div class="info-item">
-                <div class="info-label">شماره تلفن :</div>
-                <div class="info-value">
-                    {{ $user->personal_info->phone }}
-                </div>
-            </div>
-            <div class="info-item">
-                <div class="info-label">کد ملی :</div>
-                <div class="info-value">
-                    {{ $user->personal_info->national_code }}
-                </div>
-            </div>
-            <div class="info-item">
-                <div class="info-label">شماره شناسنامه :</div>
-                <div class="info-value">
-                    {{ $user->personal_info->id_number }}
-                </div>
-            </div>
-            <div class="info-item">
-                <div class="info-label">نام پدر :</div>
-                <div class="info-value">
-                    {{ $user->personal_info->father_name }}
-                </div>
-            </div>
-            <div class="info-item">
-                <div class="info-label">تاریخ تولد :</div>
-                <div class="info-value">
-                    {{ $user->personal_info->birthdate }}
-                </div>
-            </div>
-            <div class="info-item">
-                <div class="info-label">محل تولد :</div>
-                <div class="info-value">
-                    {{ $user->personal_info->birthplace }}
-                </div>
-            </div>
-            <div class="info-item">
-                <div class="info-label">آدرس محل سکونت :</div>
-                <div class="info-value">
-                    {{ $user->personal_info->address }}
-                </div>
-            </div>
-            <div class="info-item">
-                <div class="info-label">کد پستی :</div>
-                <div class="info-value">
-                    {{ $user->personal_info->postal_code }}
-                </div>
-            </div>
-            <div class="info-item">
-                <div class="info-label">نام کاربری :</div>
-                <div class="info-value">
-                    {{ $user->username }}
-                </div>
-            </div>
-            <div class="info-item">
-                <div class="info-label">رمز عبور :</div>
-                <div class="info-value">************</div>
-            </div>
-            <div class="info-item">
-                <div class="info-label">عکس پرسنلی:</div>
-                <div class="info-value"><img width="300" src="{{$user->personal_info->personal_image->url }}" alt="">
-
-                </div>
-            </div>
-            <div class="info-item">
-                <div class="info-label">آخرین مدرک:</div>
-                <div class="info-value">
-                    @if($user->personal_info->last_degree->isImage())
-                        <img width="300"
-                             src="{{ route('get-file.personal-info.last-degree',['file' => $user->personal_info->last_degree])  }}"
-                             alt="">
-                    @else
-                        <a href="{{ route('get-file.personal-info.last-degree',['file' => $user->personal_info->last_degree]) }}">
-                            {{ $user->personal_info->last_degree->filename }}
-                        </a>
-                    @endif
-                </div>
-            </div>
-        </div>
-
-        <!-- دو کادر پایین -->
-
-        <div class="bottom-cards">
-            <!-- کادر اول: اطلاعات رزومه -->
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-title">
-                        <span>📝</span>
-                        <span>اطلاعات رزومه : </span>
-                    </div>
-                    <div class="card-value">
-                        {{ $user->resume->text }}
+    <!-- لیست اطلاعات - یک ستون پشت سر هم -->
+    <form action="{{ route('job-requested.info.edit.update') }}" method="post" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
+        <div>
+            <div class="info-list">
+                <div class="info-item">
+                    <div class="info-label">نام:</div>
+                    <div class="info-value">
+                        <input type="text" name="firstname"
+                               value="{{ old('firstname',$user->personal_info->firstname) }}">
                     </div>
                 </div>
-                <div>
-                    @foreach($user->resume->files as $file)
-                        <a href="{{ route('get-file.resume.file',['file' => $file]) }}">
-                            {{ $file->filename }}
-                        </a>
-                    @endforeach
+                <div class="info-item">
+                    <div class="info-label">نام خانوادگی:</div>
+                    <div class="info-value">
+                        <input type="text" name="lastname" value="{{ old('lastname',$user->personal_info->lastname) }}">
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">شماره تلفن :</div>
+                    <div class="info-value"><input type="text" name="phone"
+                                                   value="{{ old('phone',$user->personal_info->phone) }}">
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">کد ملی :</div>
+                    <div class="info-value"><input type="text" name="national_code"
+                                                   value="{{ old('national_code',$user->personal_info->national_code) }}">
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">شماره شناسنامه :</div>
+                    <div class="info-value"><input type="text" name="id_number"
+                                                   value="{{ old('id_number',$user->personal_info->id_number) }}">
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">نام پدر :</div>
+                    <div class="info-value"><input type="text" name="father_name"
+                                                   value="{{ old('father_name',$user->personal_info->father_name) }}">
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">تاریخ تولد :</div>
+                    <div class="info-value"><input type="text" name="birthdate"
+                                                   value="{{ old('birthdate',$user->personal_info->birthdate) }}"></div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">محل تولد :</div>
+                    <div class="info-value"><input type="text" name="birthplace"
+                                                   value="{{ old('birthplace',$user->personal_info->birthplace) }}">
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">آدرس محل سکونت :</div>
+                    <div class="info-value"><input type="text" name="address"
+                                                   value="{{ old('address',$user->personal_info->address) }}">
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">کد پستی :</div>
+                    <div class="info-value"><input type="text" name="postal_code"
+                                                   value="{{ old('postal_code',$user->personal_info->postal_code) }}">
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">نام کاربری :</div>
+                    <div class="info-value"><input type="text" name="username"
+                                                   value="{{ old('username',$user->username) }}"></div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">رمز عبور جدید :</div>
+                    <div class="info-value"><input type="password" name="password"></div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">تایید رمز عبور جدید:</div>
+                    <div class="info-value"><input type="password" name="password_confirmation"></div>
+                </div>
+                <div class=" info-item">
+                    <div class="info-label">عکس پرسنلی:</div>
+                    <div class="info-value"><input type="file" name="personal_image"></div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">آخرین مدرک:</div>
+                    <div class="info-value"><input type="file" name="last_degree"></div>
                 </div>
             </div>
-        </div>
 
-        <!-- دکمه ویرایش -->
+            <!-- دو کادر پایین -->
+            <div class="bottom-cards">
+                <!-- کادر اول: اطلاعات رزومه -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span>📝</span>
+                            <span>اطلاعات رزومه : </span>
+                        </div>
+                        <div class="card-value">
+                            <span></span>
+                        </div>
+                    </div>
 
-        <div class="edit-button-wrapper">
-            <a href="{{ route('job-requested.info.edit') }}" class="edit-btn" id="editBtn">ویرایش</a>
+                    <!-- بخش متن رزومه -->
+                    <span class="blue-label">متن:</span>
+                    <span>
+                                <textarea name="resume_text" id="">{{ $user->resume->text }}</textarea>
+                            </span>
+
+                    <div>
+                        @foreach($user->resume->files as $file)
+                            <span>
+                                        <input type="checkbox" name="delete_resume_files[]" value="{{ $file->id }}">
+                                        <a href="{{ route('get-file.resume.file',['file'=>$file]) }}"
+                                           download="{{ $file->filename }}">
+                                            {{ $file->filename }}
+                                        </a>
+                                    </span>
+                        @endforeach
+                    </div>
+                    <div class="file-upload-row">
+                        <span class="file-label-text">افزودن فایل :</span>
+                        <input type="file" id="resumeFileInput" name="new_resume_files[]" class="custom-file-input"
+                               accept=".pdf,.doc,.docx,.jpg,.png">
+                    </div>
+                    <div class="file-name-display" id="fileNameDisplay"></div>
+                </div>
+
+            </div>
+
+
+            <div class="double-button-wrapper">
+                <button class="action-btn submit-btn" id="submitDataBtn" name="updateInfoSubmit">ثبت</button>
+                <a href="{{ route('job-requested.info') }}" class="action-btn back-btn" id="returnActionBtn">بازگشت</a>
+            </div>
+
         </div>
-    </div>
+    </form>
 </div>
 </body>
 

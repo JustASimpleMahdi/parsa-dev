@@ -38,7 +38,7 @@ class PersonalInfo extends Model
 
     public function last_degree(): BelongsTo
     {
-        return $this->belongsTo(File::class, 'personal_image_file_id');
+        return $this->belongsTo(File::class, 'last_degree_file_id');
     }
 
     protected function fullname(): Attribute
