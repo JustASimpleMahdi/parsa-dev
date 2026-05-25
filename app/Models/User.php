@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
@@ -26,6 +27,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     use HasFactory, Notifiable;
     use Authenticatable, Authorizable;
 
+    public function job_requests(): HasMany
+    {
+        return $this->hasMany(JobRequest::class);
+    }
     public function resume(): HasOne
     {
         return $this->hasOne(Resume::class);

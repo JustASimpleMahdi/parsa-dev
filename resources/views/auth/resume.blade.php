@@ -362,165 +362,46 @@
                     </div>
                 </div>
                 <h4 style="color:#6DCCF0; margin:20px 0 10px;">🎯 موقعیت‌های شغلی مورد نظر (چند گزینه مجاز)</h4>
-                <div class="job-check-list" id="jobCheckList"></div>
+                <div class="job-check-list" id="jobCheckList">
+                    @foreach($jobOpportunities as $jobOpportunity)
+                        <div class="job-check-item">
+                            @if($jobOpportunity->capacity > $jobOpportunity->full)
+                                <label>
+                                    <span class="custom-circle-check">
+                                        <input name="job_opportunities[]" type="checkbox" class="job-circle-checkbox"
+                                               value="{{ $jobOpportunity->id }}">
+                                        <span class="circle-mark"></span>
+                                    </span>
+                                    <span
+                                        style="display: flex; justify-content: space-between; align-items: center; width: 100%; cursor: pointer;">
+                                        <span>{{ $jobOpportunity->title }}</span>
+                                        <span
+                                            style="color:#27ECAB; font-size: 0.85rem;"> ({{ $jobOpportunity->remaining_capacity }} ظرفیت)</span>
+                                    </span>
+                                </label>
+                            @else
+                                <div class="custom-circle-check" style="opacity:0.5; cursor:not-allowed;">
+                                    <input type="checkbox" disabled>
+                                    <span class="circle-mark"
+                                          style="background-color:#64748B; border-color:#475569;"></span>
+                                </div>
+                                <label
+                                    style="cursor:default; display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                    <span
+                                        style="font-size: 1.05rem; font-weight: 600;">{{ $jobOpportunity->title }}</span>
+                                    <span class="job-full-badge"
+                                          style="font-size: 1rem; font-weight: 600; background: transparent; padding: 0;"><i
+                                            class="fas fa-ban"></i> ظرفیت تکمیل شد</span>
+                                </label>
+                            @endif
+                        </div>
+                    @endforeach
+                </div>
                 <button id="submitResumeBtn">تکمیل ثبت نام و ارسال درخواست</button>
             </div>
         </form>
     </div>
 </div>
-
-<div id="toastMessage" class="toast-msg"></div>
-
-<script>
-    const jobListings = [{
-        id: 1,
-        title: "فرانت اند جونیور",
-        salary: "حقوق ماهیانه: ۳۵ تا ۴۷ میلیون تومان",
-        capacity: 3,
-        hired: 1
-    },
-        {
-            id: 2,
-            title: "بک اند دولوپر",
-            salary: "حقوق ماهیانه: ۵۵ تا ۷۸ میلیون تومان",
-            capacity: 2,
-            hired: 1
-        },
-        {
-            id: 3,
-            title: "React Native Developer",
-            salary: "حقوق ماهیانه: ۶۵ تا ۹۲ میلیون تومان",
-            capacity: 4,
-            hired: 2
-        },
-        {
-            id: 4,
-            title: "کارآموز DevOps",
-            salary: "حقوق ماهیانه: ۲۲ تا ۳۰ میلیون تومان",
-            capacity: 5,
-            hired: 3
-        },
-        {
-            id: 5,
-            title: "طراح UI/UX",
-            salary: "حقوق ماهیانه: ۵۰ تا ۷۰ میلیون تومان",
-            capacity: 2,
-            hired: 0
-        },
-        {
-            id: 6,
-            title: "متخصص امنیت",
-            salary: "حقوق ماهیانه: ۸۵ تا ۱۲۰ میلیون تومان",
-            capacity: 3,
-            hired: 3
-        }
-    ];
-
-    function showToast(msg, isError = false) {
-        const toast = document.getElementById("toastMessage");
-        toast.style.display = "block";
-        toast.innerText = msg;
-        toast.style.backgroundColor = isError ? "#7F1D1D" : "#064E3B";
-        toast.style.borderLeftColor = isError ? "#F43F5E" : "#27ECAB";
-        setTimeout(() => {
-            toast.style.display = "none";
-        }, 3000);
-    }
-
-    function renderJobCheckList() {
-        const container = document.getElementById("jobCheckList");
-        if (!container) return;
-        container.innerHTML = "";
-
-        jobListings.forEach(job => {
-            const remaining = job.capacity - job.hired;
-            const isFull = remaining <= 0;
-            const div = document.createElement("div");
-            div.className = "job-check-item";
-
-            if (isFull) {
-                div.innerHTML = `
-                        <div class="custom-circle-check" style="opacity:0.5; cursor:not-allowed;">
-                            <input type="checkbox" disabled>
-                            <span class="circle-mark" style="background-color:#64748B; border-color:#475569;"></span>
-                        </div>
-                        <label style="cursor:default; display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                            <span style="font-size: 1.05rem; font-weight: 600;">${job.title}</span>
-                            <span class="job-full-badge" style="font-size: 1rem; font-weight: 600; background: transparent; padding: 0;"><i class="fas fa-ban"></i> ظرفیت تکمیل شد</span>
-                        </label>
-                    `;
-            } else {
-                div.innerHTML = `
-                        <div class="custom-circle-check" data-job-id="${job.id}" onclick="this.querySelector('input').click()">
-                            <input type="checkbox" class="job-circle-checkbox" value="${job.id}" data-title="${job.title}" id="job_circle_${job.id}">
-                            <span class="circle-mark"></span>
-                        </div>
-                        <label for="job_circle_${job.id}" style="display: flex; justify-content: space-between; align-items: center; width: 100%; cursor: pointer;">
-                            <span>${job.title}</span>
-                            <span style="color:#27ECAB; font-size: 0.85rem;"> (${remaining} ظرفیت)</span>
-                        </label>
-                    `;
-            }
-            container.appendChild(div);
-        });
-
-        document.querySelectorAll('.job-circle-checkbox').forEach(cb => {
-            cb.addEventListener('change', function (e) {
-                // فقط برای اطمینان از تغییر رنگ
-            });
-        });
-    }
-
-    // document.getElementById("submitResumeBtn").addEventListener("click", () => {
-    //     const hasFile = document.getElementById("resumeFile").files.length > 0;
-    //     const hasText = document.getElementById("resumeText").value.trim().length > 0;
-    //
-    //     if (!hasFile && !hasText) {
-    //         return showToast("❌ حداقل یکی از روش‌های ارسال رزومه (فایل یا متن) را پر کنید", true);
-    //     }
-    //
-    //     const selectedJobs = [];
-    //     document.querySelectorAll(".job-circle-checkbox:checked").forEach(cb => {
-    //         selectedJobs.push({
-    //             id: parseInt(cb.value),
-    //             title: cb.getAttribute("data-title")
-    //         });
-    //     });
-    //
-    //     if (selectedJobs.length === 0) {
-    //         return showToast("❌ لطفاً حداقل یک موقعیت شغلی را انتخاب کنید", true);
-    //     }
-    //
-    //     const pendingUserData = JSON.parse(localStorage.getItem("parsaPendingUser"));
-    //     if (!pendingUserData) {
-    //         showToast("❌ اطلاعات کاربری یافت نشد. لطفاً از صفحه ثبت نام شروع کنید", true);
-    //         setTimeout(() => {
-    //             window.location.href = "register.html";
-    //         }, 1500);
-    //         return;
-    //     }
-    //
-    //     const resumeData = {
-    //         fileName: document.getElementById("resumeFile").files[0]?.name || null,
-    //         textResume: document.getElementById("resumeText").value.trim() || null,
-    //         selectedJobs: selectedJobs
-    //     };
-    //
-    //     const users = JSON.parse(localStorage.getItem("parsaUsers")) || [];
-    //     const newUser = {...pendingUserData, resumeData, registeredAt: new Date().toISOString() };
-    //     users.push(newUser);
-    //     localStorage.setItem("parsaUsers", JSON.stringify(users));
-    //     localStorage.setItem("parsaLoggedUser", newUser.username);
-    //     localStorage.removeItem("parsaPendingUser");
-    //
-    //     showToast(`🎉 ثبت نام کامل شد! خوش آمدید ${newUser.name} ${newUser.family} - رزومه شما ارسال شد`);
-    //     setTimeout(() => {
-    //         window.location.href = "index.html";
-    //     }, 1500);
-    // });
-
-    // renderJobCheckList();
-</script>
 </body>
 
 </html>

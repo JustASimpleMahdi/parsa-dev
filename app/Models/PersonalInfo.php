@@ -20,6 +20,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
     'postal_code',
     'personal_image',
     'last_degree',
+    'personal_image_file_id',
+    'last_degree_file_id'
 )]
 class PersonalInfo extends Model
 {
