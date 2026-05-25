@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 #[Fillable('text')]
 class Resume extends Model
@@ -18,8 +18,8 @@ class Resume extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function files(): HasManyThrough
+    public function files(): BelongsToMany
     {
-        return $this->hasManyThrough(File::class, ResumeFile::class);
+        return $this->belongsToMany(File::class, ResumeFile::class);
     }
 }

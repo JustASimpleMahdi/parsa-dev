@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>پروفایل کاربر | شرکت برنامه نویسی پارسا</title>
+    @vite(['resources/css/app.css'])
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -186,12 +187,12 @@
     <div class="info-text last-info-text">نتیجه نهایی درخواست شما ، برایتان ارسال خواهد شد</div>
 
     <div class="buttons-row">
-        <button class="btn-primary" id="showDetailsBtn">
+        <a href="{{ route('job-requested.info') }}" class="btn-primary" id="showDetailsBtn">
             <i class="fas fa-id-card"></i> مشخصات
-        </button>
-        <button class="btn-secondary" id="backHomeBtn">
+        </a>
+        <a href="{{ route('index') }}" class="btn-secondary" id="backHomeBtn">
             بازگشت به صفحه اصلی
-        </button>
+        </a>
     </div>
 
     <div class="footer-text">

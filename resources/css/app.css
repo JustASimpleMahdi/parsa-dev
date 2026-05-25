@@ -16,6 +16,10 @@ html {
     scroll-behavior: smooth;
 }
 
+a {
+    text-decoration: none;
+}
+
 .container {
     max-width: 1300px;
     margin: 0 auto;

@@ -5,7 +5,10 @@ use App\Http\Middleware\JobNotRequestedMiddleware;
 use App\Http\Middleware\JobRequestedMiddleware;
 use Illuminate\Support\Facades\Route;
 
+
 Route::middleware('auth')->group(function () {
+    Route::get('/info/edit', [AuthController::class, 'editInformation'])->name('job-requested.info.edit');
+    Route::get('/info', [AuthController::class, 'showInformation'])->name('job-requested.info');
     Route::middleware(JobRequestedMiddleware::class)->get('/job/requested', function () {
         return view('job-requested');
     })->name('job-requested');

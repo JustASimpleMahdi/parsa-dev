@@ -14,6 +14,22 @@ use Illuminate\Http\Request;
 class AuthController extends Controller
 {
 
+    public function updateInformation(Request $request)
+    {
+        dd();
+        $this->showInformation();
+    }
+
+    public function editInformation()
+    {
+        return view('auth.show', ['editMode' => true]);
+    }
+
+    public function showInformation()
+    {
+        return view('auth.show');
+    }
+
     public function storeResumeAndJobRequest(Request $request)
     {
         $validated = $request->validate([

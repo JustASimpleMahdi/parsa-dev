@@ -23,8 +23,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 )]
 class PersonalInfo extends Model
 {
-    protected $primaryKey = 'user_id';
     public $incrementing = false;
+    protected $primaryKey = 'user_id';
 
     public function user(): BelongsTo
     {
@@ -33,12 +33,12 @@ class PersonalInfo extends Model
 
     public function personal_image(): BelongsTo
     {
-        return $this->belongsTo(File::class, 'personal_image');
+        return $this->belongsTo(File::class, 'personal_image_file_id');
     }
 
     public function last_degree(): BelongsTo
     {
-        return $this->belongsTo(File::class, 'last_degree');
+        return $this->belongsTo(File::class, 'personal_image_file_id');
     }
 
     protected function fullname(): Attribute
