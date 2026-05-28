@@ -54,6 +54,10 @@ class JobOpportunityController extends Controller
         return redirect()->route('manager.index');
     }
 
+    public function delete(JobOpportunity $jobOpportunity)
+    {
+        return view('manager.job-opportunities.delete', compact('jobOpportunity'));
+    }
     /**
      * Remove the specified resource from storage.
      */

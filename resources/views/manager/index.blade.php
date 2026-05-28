@@ -739,13 +739,12 @@
             <div class="jobs-grid-container">
                 @foreach($jobOpportunities as $jobOpportunity)
                     <div class="job-position-card">
-                        <form
-                            action="{{ route('manager.job-opportunities.destroy',['job_opportunity'=>$jobOpportunity]) }}"
-                            method="post" class="delete-icon">
-                            @csrf
-                            @method('DELETE')
-                            <button class="white-rect"></button>
-                        </form>
+
+
+                        <a href="{{ route('manager.job-opportunity.delete',['job_opportunity' => $jobOpportunity]) }}"
+                           class="delete-icon">
+                            <span class="white-rect"></span>
+                        </a>
                         <div class="position-card">{{ $jobOpportunity->title }}</div>
                         <div class="description-salary">{{ $jobOpportunity->description }}</div>
                         <div class="numbers">ظرفیت باقی مانده : {{ $jobOpportunity->remaining_capacity }}
