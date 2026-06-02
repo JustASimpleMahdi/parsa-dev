@@ -1,4 +1,4 @@
-@php use App\DefaultRequestTypeNameEnum; @endphp
+@php use App\DefaultRequestTypeNameEnum;use App\RequestStatusEnum; @endphp
 @extends('layout.employee.index')
 @push('styles')
     <style>
@@ -517,35 +517,22 @@
         <div class="card">
             <div class="card-title">لیست درخواست های جاری</div>
             <div class="requests-list-container">
-                <div class="request-item">
-                    <div class="request-text">
-                        باتوجه به انجام کاری شخصی ، یک روز مرخصی را درخواست می‌کنم
+                @foreach($requests as $request)
+                    <div class="request-item">
+                        <div class="request-text">
+                            <div>{{ $request->type->title }}</div>
+                            <div>{{ $request->text }}</div>
+                        </div>
+                        @if($request->status === RequestStatusEnum::PENDING)
+                            <div class="request-actions">
+                                <button class="edit-btn"> ویرایش</button>
+                                <button class="delete-btn"> حذف</button>
+                            </div>
+                        @else
+                            {{ $request->status }}
+                        @endif
                     </div>
-                    <div class="request-actions">
-                        <button class="edit-btn"> ویرایش</button>
-                        <button class="delete-btn"> حذف</button>
-                    </div>
-                </div>
-
-                <div class="request-item">
-                    <div class="request-text">
-                        ارتباط شبکه مدام قطع می‌شود. با سیم و وایرلس مشکل دارد، فقط راه‌اندازی مجدد موقت جواب می‌دهد
-                    </div>
-                    <div class="request-actions">
-                        <button class="edit-btn"> ویرایش</button>
-                        <button class="delete-btn"> حذف</button>
-                    </div>
-                </div>
-
-                <div class="request-item">
-                    <div class="request-text">
-                        با عرض پوزش، امروز به علت مشکل ناگهانی خانواده امکان حضور ندارم. یک روز مرخصی فوری می‌خواهم
-                    </div>
-                    <div class="request-actions">
-                        <button class="edit-btn"> ویرایش</button>
-                        <button class="delete-btn"> حذف</button>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>
