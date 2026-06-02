@@ -519,15 +519,21 @@
             <div class="requests-list-container">
                 @foreach($requests as $request)
                     <div class="request-item">
+                        <form action="{{ route('employee.requests.destroy',['request' => $request]) }}"
+                              id="delete-request-{{$request->id}}" method="post">
+                            @csrf
+                            @method('DELETE')
+                        </form>
                         <div class="request-text">
                             <div>{{ $request->type->title }}</div>
                             <div>{{ $request->text }}</div>
                         </div>
+
                         @if($request->status === RequestStatusEnum::PENDING)
                             <div class="request-actions">
                                 <a href="{{ route('employee.requests.edit',['request' => $request]) }}"
                                    class="edit-btn"> ویرایش</a>
-                                <button class="delete-btn"> حذف</button>
+                                <button class="delete-btn" form="delete-request-{{$request->id}}"> حذف</button>
                             </div>
                         @else
                             {{ $request->status }}

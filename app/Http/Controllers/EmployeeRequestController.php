@@ -59,6 +59,7 @@ class EmployeeRequestController extends Controller
      */
     public function destroy(Request $request)
     {
-        //
+        $request->delete();
+        return redirect()->route('employee.index')->with("request-deleted", true);
     }
 }
