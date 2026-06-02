@@ -152,6 +152,9 @@ class AuthController extends Controller
         if ($user->role === RoleEnum::MANAGER)
             return redirect()->route('manager.index');
 
+        if ($user->isEmployee())
+            return redirect()->route('employee.index');
+
         if ($user->register_status === RegisterStatusEnum::COMPLETE)
             return redirect()->route('job-requested');
 

@@ -41,6 +41,11 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return $this->hasOne(PersonalInfo::class);
     }
 
+    public function isEmployee(): bool
+    {
+        return $this->hasOne(Employee::class)->exists();
+    }
+
     protected function fullname(): Attribute
     {
         return Attribute::get(fn() => $this->personal_info->firstname . ' ' . $this->personal_info->lastname);

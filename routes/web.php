@@ -1,16 +1,21 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\JobOpportunityController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\ManagerJobRequestController;
+use App\Http\Middleware\IsEmployeeMiddleware;
 use App\Http\Middleware\IsManagerMiddleware;
 use App\Http\Middleware\JobNotRequestedMiddleware;
 use App\Http\Middleware\JobRequestedMiddleware;
 use Illuminate\Support\Facades\Route;
 
+Route::middleware(['auth', IsEmployeeMiddleware::class])->prefix('employee')->group(function () {
+    Route::get('/', [EmployeeController::class, 'index'])->name('employee.index');
+});
 
 Route::middleware(['auth', IsManagerMiddleware::class])->prefix('manager')->group(function () {
     Route::post('/job-requests/{job_request}/reject', [ManagerJobRequestController::class, 'reject'])->name('manager.job-requests.reject');
