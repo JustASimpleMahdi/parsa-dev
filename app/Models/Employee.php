@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Employee extends Model
 {
+    public function personal_info()
+    {
+        return $this->hasOneThrough(PersonalInfo::class, User::class, 'id', 'user_id', 'user_id', 'id');
+    }
     public function requests(): HasMany
     {
         return $this->hasMany(Request::class);

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\JobOpportunity;
 use App\Models\JobRequest;
+use App\Models\Request;
+use App\RequestStatusEnum;
 
 class ManagerController extends Controller
 {
@@ -16,6 +18,11 @@ class ManagerController extends Controller
             ->pluck('count', 'status');
         $jobRequestsCount->put('all', JobRequest::count());
 
-        return view('manager.index', compact('jobOpportunities', 'jobRequestsCount'));
+        $pendingRequests = Request::with(['type', 'employee.personal_info'])->where('status', RequestStatusEnum::PENDING)->get();
+        $otherRequests = Request::with(['type', 'employee.personal_info'])->whereNot('status', RequestStatusEnum::PENDING)->get();
+
+        return view('manager.index',
+            compact('jobOpportunities', 'jobRequestsCount', 'pendingRequests', 'otherRequests')
+        );
     }
 }

@@ -911,54 +911,17 @@
                             </tr>
                             </thead>
                             <tbody>
+                            @foreach($pendingRequests as $request)
                             <tr>
-                                <td>مهدی ارکی</td>
-                                <td>درخواست مرخصی</td>
+                                <td>{{ $request->employee->personal_info->fullname }}</td>
+                                <td>{{ $request->type->title }}</td>
                                 <td class="action-buttons">
                                     <button class="view-request-btn">مشاهده درخواست</button>
                                     <button class="delete-request-btn">حذف</button>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>المیرا حق نظری</td>
-                                <td>درخواست استعفا</td>
-                                <td class="action-buttons">
-                                    <button class="view-request-btn">مشاهده درخواست</button>
-                                    <button class="delete-request-btn">حذف</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>کوروش خالقی</td>
-                                <td>درخواست گزارش خرابی</td>
-                                <td class="action-buttons">
-                                    <button class="view-request-btn">مشاهده درخواست</button>
-                                    <button class="delete-request-btn">حذف</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>زهرا برزگران</td>
-                                <td>درخواست مرخصی</td>
-                                <td class="action-buttons">
-                                    <button class="view-request-btn">مشاهده درخواست</button>
-                                    <button class="delete-request-btn">حذف</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>یاسمن جاجرمی</td>
-                                <td>درخواست مرخصی</td>
-                                <td class="action-buttons">
-                                    <button class="view-request-btn">مشاهده درخواست</button>
-                                    <button class="delete-request-btn">حذف</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>رضا کریمی</td>
-                                <td>درخواست مرخصی</td>
-                                <td class="action-buttons">
-                                    <button class="view-request-btn">مشاهده درخواست</button>
-                                    <button class="delete-request-btn">حذف</button>
-                                </td>
-                            </tr>
+                            @endforeach
+
                             </tbody>
                         </table>
                     </div>
@@ -976,62 +939,17 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>مهدی ارکی</td>
-                                <td>درخواست مرخصی</td>
-                                <td class="action-buttons">
-                                    <button class="view-request-btn">مشاهده درخواست</button>
-                                    <button class="delete-request-btn">حذف</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>المیرا حق نظری</td>
-                                <td>درخواست افزایش حقوق</td>
-                                <td class="action-buttons">
-                                    <button class="view-request-btn">مشاهده درخواست</button>
-                                    <button class="delete-request-btn">حذف</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>کوروش خالقی</td>
-                                <td>درخواست انتقال</td>
-                                <td class="action-buttons">
-                                    <button class="view-request-btn">مشاهده درخواست</button>
-                                    <button class="delete-request-btn">حذف</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>زهرا برزگران</td>
-                                <td>درخواست مرخصی</td>
-                                <td class="action-buttons">
-                                    <button class="view-request-btn">مشاهده درخواست</button>
-                                    <button class="delete-request-btn">حذف</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>یاسمن جاجرمی</td>
-                                <td>درخواست دوره آموزشی</td>
-                                <td class="action-buttons">
-                                    <button class="view-request-btn">مشاهده درخواست</button>
-                                    <button class="delete-request-btn">حذف</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>سارا احمدی</td>
-                                <td>درخواست مرخصی</td>
-                                <td class="action-buttons">
-                                    <button class="view-request-btn">مشاهده درخواست</button>
-                                    <button class="delete-request-btn">حذف</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>علی رضایی</td>
-                                <td>درخواست استعفا</td>
-                                <td class="action-buttons">
-                                    <button class="view-request-btn">مشاهده درخواست</button>
-                                    <button class="delete-request-btn">حذف</button>
-                                </td>
-                            </tr>
+                            @foreach($otherRequests as $request)
+                                <tr>
+                                    <td>{{ $request->employee->personal_info->fullname }}</td>
+                                    <td>{{ $request->type->title }}</td>
+                                    <td class="action-buttons">
+                                        <button class="view-request-btn">مشاهده درخواست</button>
+                                        <button class="delete-request-btn">حذف</button>
+                                    </td>
+                                </tr>
+                            @endforeach
+
                             </tbody>
                         </table>
                     </div>
