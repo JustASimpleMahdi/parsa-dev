@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+@php use App\JobRequestStatusEnum; @endphp
+    <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -258,15 +259,47 @@
         .perosnal-image {
             width: 300px;
         }
+
+        .accepted-message {
+            display: block;
+            text-align: center;
+            max-width: 350px;
+            padding: 10px;
+            margin-inline: auto;
+            margin-bottom: 20px;
+            background-color: limegreen;
+            color: white;
+            border-radius: 20px;
+        }
+
+        .rejected-message {
+            display: block;
+            text-align: center;
+            max-width: 350px;
+            padding: 10px;
+            margin-inline: auto;
+            margin-bottom: 20px;
+            background-color: orangered;
+            color: white;
+            border-radius: 20px;
+        }
     </style>
 </head>
 <body>
 
 <div class="header-row">
     <div class="main-title">درخواست جدید</div>
-    <a href="{{ route('manager.job-requests.index',['status' => $jobRequest->status]) }}" class="back-icon">⬅</a>
+    <a href="{{ route('manager.index') }}" class="back-icon">⬅</a>
 </div>
-
+@if($jobRequest->status === JobRequestStatusEnum::ACCEPTED)
+    <div class="accepted-message">
+        درخواست تایید شد.
+    </div>
+@elseif($jobRequest->status === JobRequestStatusEnum::REJECTED)
+    <div class="rejected-message">
+        درخواست رد شد.
+    </div>
+@endif
 <div class="profile-grid">
     <div class="grid-item">
         <div class="grid-label">نام و نام خانوادگی</div>
@@ -323,17 +356,25 @@
 <div class="resume-container">
     <ul class="links-list">
         @foreach($jobRequest->user->resume->files as $file)
-
             <li><a href="{{ route('get-file.resume.file',['file'=>$file]) }}">{{ $file->filename }}</a></li>
         @endforeach
     </ul>
     <div class="resume-text">{{ $jobRequest->user->resume->text }}</div>
 </div>
+@if($jobRequest->status === JobRequestStatusEnum::PENDING)
+    <form action="{{ route('manager.job-requests.accept',['job_request' => $jobRequest]) }}" method="post"
+          id="acceptForm">
+        @csrf
+    </form>
+    <form action="{{ route('manager.job-requests.reject',['job_request' => $jobRequest]) }}" method="post"
+          id="rejectForm">
+        @csrf
+    </form>
 
-<div class="buttons-container">
-    <button class="accept-btn">پذیرش</button>
-    <button class="reject-btn">عدم پذیرش</button>
-</div>
-
+    <div class="buttons-container">
+        <button class="accept-btn" form="acceptForm">پذیرش</button>
+        <button class="reject-btn" form="rejectForm">عدم پذیرش</button>
+    </div>
+@endif
 </body>
 </html>

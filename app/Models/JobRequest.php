@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\JobRequestStatusEnum;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
@@ -15,5 +16,12 @@ class JobRequest extends Pivot
     public function job_opportunity(): BelongsTo
     {
         return $this->belongsTo(JobOpportunity::class);
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'status' => JobRequestStatusEnum::class
+        ];
     }
 }

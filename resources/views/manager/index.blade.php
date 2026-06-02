@@ -814,15 +814,16 @@
                         <span class="stat-label">درخواست های جدید</span>
                         <button class="show-requests-btn">نمایش درخواست ها</button>
                     </a>
-                    <a href="{{ route('manager.job-requests.index',['status'=>JobRequestStatusEnum::PENDING]) }}"
+                    <a href="{{ route('manager.job-requests.index',['status'=>JobRequestStatusEnum::ACCEPTED]) }}"
                        class="stat-box">
                         <span class="stat-label">درخواست های تایید شده</span>
                         <button class="show-requests-btn">نمایش درخواست ها</button>
                     </a>
-                    <div class="stat-box">
+                    <a href="{{ route('manager.job-requests.index',['status' => JobRequestStatusEnum::REJECTED]) }}"
+                       class="stat-box">
                         <span class="stat-label">درخواست های رد شده</span>
                         <button class="show-requests-btn">نمایش درخواست ها</button>
-                    </div>
+                    </a>
                 </div>
 
                 <div class="pie-legend">
@@ -854,7 +855,11 @@
                             $centerY = 50;
                             $radius = 42;
                             $total = $jobRequestsCount['all'];
-                            $colors = [JobRequestStatusEnum::PENDING->value => 'white'];
+                            $colors = [
+                                JobRequestStatusEnum::PENDING->value => '#FFFFFF',
+                                JobRequestStatusEnum::ACCEPTED->value => '#27ECAB',
+                                JobRequestStatusEnum::REJECTED->value => '#F26F6F'
+                            ];
                         @endphp
 
                         @foreach($jobRequestsCount->except('all') as $status => $count)

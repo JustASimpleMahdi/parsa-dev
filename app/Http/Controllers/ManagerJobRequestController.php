@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\JobRequestStatusEnum;
-use App\Models\JobOpportunity;
+use App\Models\Employee;
+use App\Models\Job;
 use App\Models\JobRequest;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ManagerJobRequestController extends Controller
 {
@@ -47,33 +49,42 @@ class ManagerJobRequestController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(JobRequest $jobRequest, JobOpportunity $jobOpportunity)
+    public function show(JobRequest $jobRequest)
     {
         $jobRequest->load('user', 'user.personal_info', 'user.resume', 'user.resume.files', 'job_opportunity');
         return view('manager.job-requests.show', compact('jobRequest'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function accept(JobRequest $jobRequest)
     {
-        //
+        $jobRequest->load('job_opportunity:title,hired', 'user:id');
+
+        DB::transaction(function () use ($jobRequest) {
+            $jobRequest->update(['status' => JobRequestStatusEnum::ACCEPTED]);
+
+            $job = Job::firstOrCreate(
+                ['title' => $jobRequest->job_opportunity->title],
+                ['title' => $jobRequest->job_opportunity->title]
+            );
+
+            $employee = new Employee();
+            $employee->job()->associate($job);
+            $employee->user()->associate($jobRequest->user);
+            $employee->save();
+
+            $jobRequest->job_opportunity->hired++;
+            $jobRequest->job_opportunity->save();
+
+            $jobRequest->user->job_requests()->where('status', JobRequestStatusEnum::PENDING)
+                ->update(['status' => JobRequestStatusEnum::REJECTED]);
+        });
+        return redirect()->route('manager.job-requests.show', $jobRequest)->with('accepted', true);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function reject(JobRequest $jobRequest)
     {
-        //
-    }
+        $jobRequest->update(['status' => JobRequestStatusEnum::REJECTED]);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return redirect()->route('manager.job-requests.show', $jobRequest)->with('rejected', true);
     }
 }

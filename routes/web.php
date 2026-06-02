@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::middleware(['auth', IsManagerMiddleware::class])->prefix('manager')->group(function () {
+    Route::post('/job-requests/{job_request}/reject', [ManagerJobRequestController::class, 'reject'])->name('manager.job-requests.reject');
+    Route::post('/job-requests/{job_request}/accept', [ManagerJobRequestController::class, 'accept'])->name('manager.job-requests.accept');
     Route::get('/job-requests/{job_request}', [ManagerJobRequestController::class, 'show'])->name('manager.job-requests.show');
     Route::get('/job-requests/status/{status}', [ManagerJobRequestController::class, 'index'])->name('manager.job-requests.index');
     Route::get('/job-opportunities/{job_opportunity}/delete', [JobOpportunityController::class, 'delete'])->name('manager.job-opportunity.delete');
