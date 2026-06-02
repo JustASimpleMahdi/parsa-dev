@@ -14,7 +14,7 @@
 
 <div class="top-navbar">
     <div class="nav-container">
-        <div class="logo">PARSA_DEV</div>
+        <a href="{{ route('index') }}" class="logo">PARSA_DEV</a>
         <div class="nav-actions">
             @include('layout.employee.announcement-icon')
             <div class="avatar-circle">👤</div>

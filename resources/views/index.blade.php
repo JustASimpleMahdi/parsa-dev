@@ -23,6 +23,8 @@
                     @php($user = auth()->user())
                     @if($user->role === \App\RoleEnum::MANAGER)
                         <a href="{{ route('manager.index') }}" class="btn-register">مدیریت</a>
+                    @elseif($user->isEmployee())
+                        <a href="{{ route('employee.index') }}" class="btn-register">داشبورد</a>
                     @else
                         @if($user->register_status !== \App\RegisterStatusEnum::COMPLETE)
                             <a href="{{ route('register.resume') }}" class="btn-register">ادامه ثبت نام</a>
