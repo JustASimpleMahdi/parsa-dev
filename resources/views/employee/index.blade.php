@@ -527,6 +527,13 @@
                         <div class="request-text">
                             <div>{{ $request->type->title }}</div>
                             <div>{{ $request->text }}</div>
+                            @if($request->response)
+                                <div class="response-text">
+                                    <span>پاسخ مدیر:</span>
+                                    <span>{{ jdate($request->response->updated_at)->format('H:i - Y/m/d') }}</span>
+                                    <div>{{ $request->response->text }}</div>
+                                </div>
+                            @endif
                         </div>
 
                         @if($request->status === RequestStatusEnum::PENDING)
@@ -536,7 +543,9 @@
                                 <button class="delete-btn" form="delete-request-{{$request->id}}"> حذف</button>
                             </div>
                         @else
-                            {{ $request->status }}
+                            <div class="responded">
+                                پاسخ داده شده
+                            </div>
                         @endif
                     </div>
                 @endforeach

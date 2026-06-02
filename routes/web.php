@@ -38,6 +38,7 @@ Route::middleware(['auth', IsManagerMiddleware::class])->prefix('manager')->grou
 
     Route::resource('announcements', ManagerAnnouncementController::class)->only(['index', 'store'])->names('manager.announcements');
 
+    Route::delete('/requests/{request}/resign', [ManagerRequestController::class, 'resign'])->name('manager.requests.resign');
     Route::delete('/requests/{request}/destroy', [ManagerRequestController::class, 'destroy'])->name('manager.requests.destroy');
     Route::patch('/requests/{request}/response', [ManagerRequestController::class, 'response'])->name('manager.requests.response');
     Route::get('/requests/{request}', [ManagerRequestController::class, 'show'])->name('manager.requests.show');
