@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\JobRequestStatusEnum;
+use App\Models\JobOpportunity;
 use App\Models\JobRequest;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Http\Request;
@@ -46,9 +47,10 @@ class ManagerJobRequestController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(JobRequest $jobRequest)
+    public function show(JobRequest $jobRequest, JobOpportunity $jobOpportunity)
     {
-        dd($jobRequest);
+        $jobRequest->load('user', 'user.personal_info', 'user.resume', 'user.resume.files', 'job_opportunity');
+        return view('manager.job-requests.show', compact('jobRequest'));
     }
 
     /**
