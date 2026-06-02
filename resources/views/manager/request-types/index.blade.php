@@ -543,7 +543,7 @@
                     @endif
                     <div class="card-title">{{ $type->title }}</div>
                     <div class="card-footer">
-                        <a href="{{ route('manager.request-types.edit',['request_type' => $type]) }}"
+                        <a href="{{ route('manager.request-types.show',['request_type' => $type]) }}"
                            class="submit-request-btn">ویرایش</a>
                     </div>
                 </div>
