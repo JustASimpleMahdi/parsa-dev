@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\EmployeeRequestController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\JobOpportunityController;
 use App\Http\Controllers\LandingPageController;
@@ -14,6 +15,7 @@ use App\Http\Middleware\JobRequestedMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', IsEmployeeMiddleware::class])->prefix('employee')->group(function () {
+    Route::resource('requests', EmployeeRequestController::class)->names('employee.requests');
     Route::get('/', [EmployeeController::class, 'index'])->name('employee.index');
 });
 

@@ -38,11 +38,13 @@
                 <span>🪪 مشخصات</span>
             </div>
         </div>
-        <div class="logout-section-bottom">
-            <div class="logout-text">
+        <form action="{{ route('logout') }}" method="post" class="logout-section-bottom">
+            @csrf
+            @method('DELETE')
+            <button class="logout-text">
                 <span>🚪 خروج از حساب</span>
-            </div>
-        </div>
+            </button>
+        </form>
     </aside>
 
     <main class="main-content">

@@ -1,3 +1,4 @@
+@php use App\DefaultRequestTypeNameEnum; @endphp
 @extends('layout.employee.index')
 @push('styles')
     <style>
@@ -477,34 +478,40 @@
         </div>
 
         <!-- کارت درخواست مرخصی با فیلد متنی -->
-        <div class="card">
+        <form action="{{ route('employee.requests.store') }}" method="post" class="card">
+            @csrf
+            <input name="name" value="{{ DefaultRequestTypeNameEnum::LEAVE_REQUEST->name }}" type="hidden">
             <div class="card-title">درخواست مرخصی</div>
-            <textarea class="request-input request-textarea"
+            <textarea name="text" class="request-input request-textarea"
                       placeholder=" توضیحات درخواست مرخصی(تاریخ ، مدت ، دلیل)..."></textarea>
             <div class="card-footer">
                 <button class="submit-request-btn">ارسال درخواست</button>
             </div>
-        </div>
+        </form>
 
         <!-- کارت گزارش خرابی با فیلد متنی -->
-        <div class="card">
+        <form action="{{ route('employee.requests.store') }}" method="post" class="card">
+            @csrf
+            <input name="name" value="{{ DefaultRequestTypeNameEnum::BROKEN_REPORT->name }}" type="hidden">
             <div class="card-title">گزارش خرابی</div>
-            <textarea class="request-input request-textarea"
+            <textarea name="text" class="request-input request-textarea"
                       placeholder="نوع مشکل ، سیستم مربوطه ، توضیحات کامل..."></textarea>
             <div class="card-footer">
                 <button class="submit-request-btn">ارسال درخواست</button>
             </div>
-        </div>
+        </form>
 
         <!-- کارت درخواست استعفا با فیلد متنی -->
-        <div class="card">
+        <form action="{{ route('employee.requests.store') }}" method="post" class="card">
+            @csrf
+            <input name="name" value="{{ DefaultRequestTypeNameEnum::RESIGNATION_REQUEST->name }}" type="hidden">
             <div class="card-title">درخواست استعفا</div>
-            <textarea class="request-input request-textarea"
+            <textarea name="text" class="request-input request-textarea"
                       placeholder="دلیل استعفا ، هماهنگی های لازم ..."></textarea>
             <div class="card-footer">
                 <button class="submit-request-btn">ارسال درخواست</button>
             </div>
-        </div>
+        </form>
 
         <!-- لیست درخواست‌های جاری بدون تغییر -->
         <div class="card">

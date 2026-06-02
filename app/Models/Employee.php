@@ -4,9 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Employee extends Model
 {
+    public function requests(): HasMany
+    {
+        return $this->hasMany(Request::class);
+    }
     public function job(): BelongsTo
     {
         return $this->belongsTo(Job::class);
