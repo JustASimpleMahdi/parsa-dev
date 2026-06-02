@@ -14,9 +14,9 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('job_request', function (Blueprint $table) {
+            $table->id();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(JobOpportunity::class)->constrained()->cascadeOnDelete();
-            $table->primary(['user_id', 'job_opportunity_id']);
             $table->string('status')->default(JobRequestStatusEnum::PENDING->value);
             $table->timestamps();
         });

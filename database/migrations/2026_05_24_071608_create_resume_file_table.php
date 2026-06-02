@@ -13,9 +13,9 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('resume_file', function (Blueprint $table) {
+            $table->id();
             $table->foreignIdFor(Resume::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(File::class)->constrained()->cascadeOnDelete();
-            $table->primary(['resume_user_id', 'file_id']);
             $table->timestamps();
         });
     }

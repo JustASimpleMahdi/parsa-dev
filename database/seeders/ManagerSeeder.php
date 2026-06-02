@@ -33,7 +33,7 @@ class ManagerSeeder extends Seeder
             'phone' => '09933456574',
             'address' => 'شیروان',
             'postal_code' => '0123245678',
-            'personal_image' => File::create([
+            'personal_image_file_id' => File::create([
                 'name' => 'test1',
                 'original_name' => 'test1',
                 'extension' => 'jpg',
@@ -41,7 +41,7 @@ class ManagerSeeder extends Seeder
                 'size' => 1234,
                 'path' => 'test1'
             ])->id,
-            'last_degree' => File::create([
+            'last_degree_file_id' => File::create([
                 'name' => 'test2',
                 'original_name' => 'test2',
                 'extension' => 'jpg',

@@ -10,9 +10,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 #[Fillable('text')]
 class Resume extends Model
 {
-    public $incrementing = false;
-    protected $primaryKey = 'user_id';
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
