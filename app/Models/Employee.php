@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Employee extends Model
 {
+    public function unreadAnnouncementsCount(): int
+    {
+        return $this->announcements()->wherePivotNull('read_at')->count();
+    }
     public function announcements(): BelongsToMany
     {
         return $this->belongsToMany(Announcement::class);

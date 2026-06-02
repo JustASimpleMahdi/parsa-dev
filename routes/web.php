@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EmployeeAnnouncementController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeRequestController;
 use App\Http\Controllers\FileController;
@@ -18,6 +19,8 @@ use Illuminate\Support\Facades\Route;
 
 /* Employee */
 Route::middleware(['auth', IsEmployeeMiddleware::class])->prefix('employee')->group(function () {
+    Route::get('/announcements', [EmployeeAnnouncementController::class, 'index'])->name('employee.announcements.index');
+
     Route::resource('requests', EmployeeRequestController::class)->except(['index', 'create', 'show'])->names('employee.requests');
     Route::get('/', [EmployeeController::class, 'index'])->name('employee.index');
 });

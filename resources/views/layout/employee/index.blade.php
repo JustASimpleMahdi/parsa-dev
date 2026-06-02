@@ -16,10 +16,7 @@
     <div class="nav-container">
         <div class="logo">PARSA_DEV</div>
         <div class="nav-actions">
-            <div class="notification-icon">
-                <i class="fas fa-bell"></i>
-                <span class="notification-badge">3</span>
-            </div>
+            @include('layout.employee.announcement-icon')
             <div class="avatar-circle">👤</div>
         </div>
     </div>
@@ -28,15 +25,15 @@
 <div class="dashboard-layout">
     <aside class="sidebar">
         <div class="sidebar-menu">
-            <div class="menu-item active">
+            <a href="{{ route('employee.index') }}" @class(['menu-item','active'=> request()->routeIs('employee.index')])>
                 <span>📄 درخواست‌ها</span>
-            </div>
-            <div class="menu-item">
+            </a>
+            <a href="{{ route('employee.announcements.index') }}" @class(['menu-item','active'=> request()->routeIs('employee.announcements.*')])>
                 <span>📢 اطلاعیه‌ها</span>
-            </div>
-            <div class="menu-item">
+            </a>
+            <a href="{{ route('employee.index') }}" @class(['menu-item','active'=> request()->routeIs('employee.profile')])>
                 <span>🪪 مشخصات</span>
-            </div>
+            </a>
         </div>
         <form action="{{ route('logout') }}" method="post" class="logout-section-bottom">
             @csrf
