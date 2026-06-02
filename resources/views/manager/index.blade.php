@@ -916,7 +916,8 @@
                                 <td>{{ $request->employee->personal_info->fullname }}</td>
                                 <td>{{ $request->type->title }}</td>
                                 <td class="action-buttons">
-                                    <button class="view-request-btn">مشاهده درخواست</button>
+                                    <a href="{{ route('manager.requests.show',['request'=>$request]) }}"
+                                       class="view-request-btn">مشاهده درخواست</a>
                                     <button class="delete-request-btn">حذف</button>
                                 </td>
                             </tr>
@@ -944,7 +945,8 @@
                                     <td>{{ $request->employee->personal_info->fullname }}</td>
                                     <td>{{ $request->type->title }}</td>
                                     <td class="action-buttons">
-                                        <button class="view-request-btn">مشاهده درخواست</button>
+                                        <a href="{{ route('manager.requests.show',['request'=>$request]) }}"
+                                           class="view-request-btn">مشاهده درخواست</a>
                                         <button class="delete-request-btn">حذف</button>
                                     </td>
                                 </tr>

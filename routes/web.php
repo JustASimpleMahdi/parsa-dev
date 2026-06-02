@@ -8,6 +8,7 @@ use App\Http\Controllers\JobOpportunityController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\ManagerJobRequestController;
+use App\Http\Controllers\ManagerRequestController;
 use App\Http\Middleware\IsEmployeeMiddleware;
 use App\Http\Middleware\IsManagerMiddleware;
 use App\Http\Middleware\JobNotRequestedMiddleware;
@@ -15,17 +16,24 @@ use App\Http\Middleware\JobRequestedMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', IsEmployeeMiddleware::class])->prefix('employee')->group(function () {
-    Route::resource('requests', EmployeeRequestController::class)->names('employee.requests');
+    Route::resource('requests', EmployeeRequestController::class)->except(['index', 'create', 'show'])->names('employee.requests');
     Route::get('/', [EmployeeController::class, 'index'])->name('employee.index');
 });
 
 Route::middleware(['auth', IsManagerMiddleware::class])->prefix('manager')->group(function () {
-    Route::post('/job-requests/{job_request}/reject', [ManagerJobRequestController::class, 'reject'])->name('manager.job-requests.reject');
-    Route::post('/job-requests/{job_request}/accept', [ManagerJobRequestController::class, 'accept'])->name('manager.job-requests.accept');
-    Route::get('/job-requests/{job_request}', [ManagerJobRequestController::class, 'show'])->name('manager.job-requests.show');
-    Route::get('/job-requests/status/{status}', [ManagerJobRequestController::class, 'index'])->name('manager.job-requests.index');
+    Route::patch('/requests/{request}/response', [ManagerRequestController::class, 'response'])->name('manager.requests.response');
+    Route::get('/requests/{request}', [ManagerRequestController::class, 'show'])->name('manager.requests.show');
+
+    Route::prefix('job-requests')->group(function () {
+        Route::post('/{job_request}/reject', [ManagerJobRequestController::class, 'reject'])->name('manager.job-requests.reject');
+        Route::post('/{job_request}/accept', [ManagerJobRequestController::class, 'accept'])->name('manager.job-requests.accept');
+        Route::get('/{job_request}', [ManagerJobRequestController::class, 'show'])->name('manager.job-requests.show');
+        Route::get('/status/{status}', [ManagerJobRequestController::class, 'index'])->name('manager.job-requests.index');
+    });
+
     Route::get('/job-opportunities/{job_opportunity}/delete', [JobOpportunityController::class, 'delete'])->name('manager.job-opportunity.delete');
     Route::resource('job-opportunities', JobOpportunityController::class)->names('manager.job-opportunities')->except(['show', 'index']);
+
     Route::get('/', [ManagerController::class, 'index'])->name('manager.index');
 });
 
