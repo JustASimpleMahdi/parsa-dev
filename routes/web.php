@@ -28,6 +28,7 @@ Route::middleware(['auth', IsEmployeeMiddleware::class])->prefix('employee')->gr
 
 /* Manager */
 Route::middleware(['auth', IsManagerMiddleware::class])->prefix('manager')->group(function () {
+    Route::get('/request-types/{request_type}/delete', [ManagerRequestTypeController::class, 'delete'])->name('manager.request-type.delete');
     Route::resource('/request-types', ManagerRequestTypeController::class)->except(['create'])->names('manager.request-types');
 
     Route::resource('announcements', ManagerAnnouncementController::class)->only(['index', 'store'])->names('manager.announcements');

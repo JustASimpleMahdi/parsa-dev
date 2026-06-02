@@ -538,8 +538,8 @@
             @foreach($requestTypes as $type)
                 <div class="card">
                     @if(!$type->readonly)
-
-                        <div class="delete-icon-card"><span class="white-rect"></span></div>
+                        <a href="{{ route('manager.request-type.delete',['request_type' => $type]) }}"
+                           class="delete-icon-card"><span class="white-rect"></span></a>
                     @endif
                     <div class="card-title">{{ $type->title }}</div>
                     <div class="card-footer">

@@ -65,8 +65,16 @@ class ManagerRequestTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+    public function delete(RequestType $requestType)
+    {
+        return view('manager.request-types.delete', compact('requestType'));
+    }
+    /**
+     * Remove the specified resource from storage.
+     */
     public function destroy(RequestType $requestType)
     {
-        //
+        $requestType->delete();
+        return redirect()->route('manager.request-types.index')->with('delete-success', true);
     }
 }
