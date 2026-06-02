@@ -525,7 +525,8 @@
                         </div>
                         @if($request->status === RequestStatusEnum::PENDING)
                             <div class="request-actions">
-                                <button class="edit-btn"> ویرایش</button>
+                                <a href="{{ route('employee.requests.edit',['request' => $request]) }}"
+                                   class="edit-btn"> ویرایش</a>
                                 <button class="delete-btn"> حذف</button>
                             </div>
                         @else
