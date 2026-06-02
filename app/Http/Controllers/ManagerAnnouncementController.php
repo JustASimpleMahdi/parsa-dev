@@ -13,7 +13,8 @@ class ManagerAnnouncementController extends Controller
      */
     public function index()
     {
-        $announcements = Announcement::all();
+        $announcements = Announcement::latest()->get();
+
         $employees = Employee::with(['personal_info', 'job'])->get();
 
         return view('manager.announcements.index', compact('announcements', 'employees'));

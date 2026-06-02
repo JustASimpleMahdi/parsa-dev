@@ -16,9 +16,9 @@
     <div class="nav-container">
         <a href="{{ route('index') }}" class="logo">PARSA_DEV</a>
         <div class="nav-actions">
-            <div class="notification-icon">
+            <a href="{{ route('manager.announcements.index') }}" class="notification-icon">
                 <i class="fas fa-bell"></i>
-            </div>
+            </a>
             <div class="avatar-circle">👤</div>
         </div>
     </div>

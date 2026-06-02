@@ -10,7 +10,9 @@ class EmployeeAnnouncementController extends Controller
     {
         $employee = Employee::where('user_id', auth()->user()->id)->first();
         $employee->announcements()->wherePivotNull('read_at')->update(['read_at' => now()]);
-        $announcements = $employee->announcements;
+
+        $announcements = $employee->announcements()->latest()->get();
+
         return view('employee.announcements.index', compact('announcements'));
     }
 }
