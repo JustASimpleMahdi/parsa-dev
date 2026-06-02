@@ -374,7 +374,7 @@
 <body>
 <div class="dashboard-container">
     <div class="header-area">
-        <h1 class="page-title">درخواست‌های جدید</h1>
+        <h1 class="page-title">درخواست‌های {{ __("job-request.manager.status.$status->value") }}</h1>
         <div class="left-controls">
             <form action="" class="search-wrapper">
                 <input name="search" value="{{ request('search') }}" type="text" id="searchJobInput"

@@ -288,7 +288,7 @@
 <body>
 
 <div class="header-row">
-    <div class="main-title">درخواست جدید</div>
+    <div class="main-title">درخواست {{ __("job-request.manager.status.{$jobRequest->status->value}") }}</div>
     <a href="{{ route('manager.index') }}" class="back-icon">⬅</a>
 </div>
 @if($jobRequest->status === JobRequestStatusEnum::ACCEPTED)
