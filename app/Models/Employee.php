@@ -4,10 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Employee extends Model
 {
+    public function announcements(): BelongsToMany
+    {
+        return $this->belongsToMany(Announcement::class);
+    }
     public function personal_info()
     {
         return $this->hasOneThrough(PersonalInfo::class, User::class, 'id', 'user_id', 'user_id', 'id');

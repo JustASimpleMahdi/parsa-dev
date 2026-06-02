@@ -27,19 +27,25 @@
 <div class="dashboard-layout">
     <aside class="sidebar">
         <div class="sidebar-menu">
-            <div class="menu-item active">
+            <a href="{{ route('manager.index') }}"
+                @class(['menu-item', 'active' => request()->routeIs('manager.index')])>
                 <span>📄 درخواست‌ها</span>
-            </div>
-            <div class="menu-item">
+            </a>
+
+            <a href="{{ route('manager.announcements.index') }}"
+                @class(['menu-item', 'active' => request()->routeIs('manager.announcements.*')])>
                 <span>📢 اطلاعیه‌ها</span>
-            </div>
-            <div class="menu-item">
+            </a>
+
+            <div @class(['menu-item', 'active' => request()->routeIs('manager.profile')])>
                 <span>🪪 مشخصات</span>
             </div>
-            <div class="edit-requests-menu-btn">
+
+            <div @class(['edit-requests-menu-btn', 'active' => request()->routeIs('manager.edit-requests')])>
                 <span>✏️ ویرایش درخواست‌ها</span>
             </div>
         </div>
+
         <form action="{{ route('logout') }}" method="post" class="logout-section-bottom">
             @csrf
             @method('DELETE')
@@ -54,6 +60,7 @@
     </main>
 </div>
 
+@stack('scripts')
 </body>
 
 </html>

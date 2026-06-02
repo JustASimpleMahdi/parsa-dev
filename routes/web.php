@@ -6,6 +6,7 @@ use App\Http\Controllers\EmployeeRequestController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\JobOpportunityController;
 use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\ManagerAnnouncementController;
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\ManagerJobRequestController;
 use App\Http\Controllers\ManagerRequestController;
@@ -15,12 +16,16 @@ use App\Http\Middleware\JobNotRequestedMiddleware;
 use App\Http\Middleware\JobRequestedMiddleware;
 use Illuminate\Support\Facades\Route;
 
+/* Employee */
 Route::middleware(['auth', IsEmployeeMiddleware::class])->prefix('employee')->group(function () {
     Route::resource('requests', EmployeeRequestController::class)->except(['index', 'create', 'show'])->names('employee.requests');
     Route::get('/', [EmployeeController::class, 'index'])->name('employee.index');
 });
 
+/* Manager */
 Route::middleware(['auth', IsManagerMiddleware::class])->prefix('manager')->group(function () {
+    Route::resource('announcements', ManagerAnnouncementController::class)->only(['index', 'store'])->names('manager.announcements');
+
     Route::delete('/requests/{request}/destroy', [ManagerRequestController::class, 'destroy'])->name('manager.requests.destroy');
     Route::patch('/requests/{request}/response', [ManagerRequestController::class, 'response'])->name('manager.requests.response');
     Route::get('/requests/{request}', [ManagerRequestController::class, 'show'])->name('manager.requests.show');
