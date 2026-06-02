@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\JobOpportunity;
+use App\Models\JobRequest;
 
 class ManagerController extends Controller
 {
@@ -10,6 +11,11 @@ class ManagerController extends Controller
     {
         $jobOpportunities = JobOpportunity::all();
 
-        return view('manager.index', compact('jobOpportunities'));
+        $jobRequestsCount = JobRequest::selectRaw('status, count(*) as count')
+            ->groupBy('status')
+            ->pluck('count', 'status');
+        $jobRequestsCount->put('all', JobRequest::count());
+
+        return view('manager.index', compact('jobOpportunities', 'jobRequestsCount'));
     }
 }

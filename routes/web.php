@@ -5,12 +5,16 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\JobOpportunityController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\ManagerController;
+use App\Http\Controllers\ManagerJobRequestController;
 use App\Http\Middleware\IsManagerMiddleware;
 use App\Http\Middleware\JobNotRequestedMiddleware;
 use App\Http\Middleware\JobRequestedMiddleware;
 use Illuminate\Support\Facades\Route;
 
+
 Route::middleware(['auth', IsManagerMiddleware::class])->prefix('manager')->group(function () {
+    Route::get('/job-requests/{job_request}', [ManagerJobRequestController::class, 'show'])->name('manager.job-requests.show');
+    Route::get('/job-requests/status/{status}', [ManagerJobRequestController::class, 'index'])->name('manager.job-requests.index');
     Route::get('/job-opportunities/{job_opportunity}/delete', [JobOpportunityController::class, 'delete'])->name('manager.job-opportunity.delete');
     Route::resource('job-opportunities', JobOpportunityController::class)->names('manager.job-opportunities')->except(['show', 'index']);
     Route::get('/', [ManagerController::class, 'index'])->name('manager.index');
