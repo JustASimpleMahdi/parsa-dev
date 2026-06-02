@@ -402,7 +402,8 @@
                 <tr>
                     <td>{{ $jobRequest->user->fullname }}</td>
                     <td><span class="job-text">{{ $jobRequest->job_opportunity->title }}</span></td>
-                    <td><a href="" class="detail-btn">مشاهده درخواست ها</a></td>
+                    <td><a href="{{ route('manager.job-requests.show',['job_request' => $jobRequest->id]) }}"
+                           class="detail-btn">مشاهده درخواست ها</a></td>
                 </tr>
             @endforeach
             </tbody>

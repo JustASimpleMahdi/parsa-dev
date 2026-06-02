@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\File;
 use App\Models\JobOpportunity;
-use App\Models\ResumeFile;
 use App\Models\User;
 use App\RegisterStatusEnum;
 use App\RoleEnum;
@@ -77,9 +76,9 @@ class AuthController extends Controller
                 File::find($file_id)->delete();
             }
 
-            collect($resumeValidated->get('new_resume_files', []))
-                ->map(fn($uploadedFile) => FileService::upload($uploadedFile, UploadPathEnum::RESUME->value))
-                ->each(fn($file) => ResumeFile::create(['file_id' => $file->id, 'resume_user_id' => $user->id]));
+            $files = collect($resumeValidated->get('new_resume_files', []))
+                ->map(fn($uploadedFile) => FileService::upload($uploadedFile, UploadPathEnum::RESUME->value));
+            $user->resume->files()->saveMany($files);
 
             $newJobRequests = collect($jobRequestValidated['job_opportunities'])
                 ->diff($user->job_requests->pluck('job_opportunity_id'));
@@ -115,10 +114,11 @@ class AuthController extends Controller
             $user = auth()->user();
             $resume = $user->resume()->create(['text' => $validated['resume_text']]);
 
-            if (isset($validated['resume_files']))
-                collect($validated['resume_files'])
-                    ->map(fn($uploadedFile) => FileService::upload($uploadedFile, UploadPathEnum::RESUME->value))
-                    ->each(fn($file) => ResumeFile::create(['file_id' => $file->id, 'resume_user_id' => $resume->user_id]));
+            if (isset($validated['resume_files'])) {
+                $files = collect($validated['resume_files'])
+                    ->map(fn($uploadedFile) => FileService::upload($uploadedFile, UploadPathEnum::RESUME->value));
+                $resume->files()->saveMany($files);
+            }
 
             $user->job_requests()->createMany(
                 collect($validated['job_opportunities'])->map(fn($id) => ['job_opportunity_id' => $id])
