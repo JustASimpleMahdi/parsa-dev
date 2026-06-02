@@ -26,4 +26,10 @@ class ManagerRequestController extends Controller
         });
         return redirect()->route('manager.index')->with("request-$request->id-responded", true);
     }
+
+    public function destroy(Request $request)
+    {
+        $request->delete();
+        return redirect()->route('manager.index')->with("request-$request->id-responded", true);
+    }
 }

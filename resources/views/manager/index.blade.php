@@ -945,9 +945,20 @@
                                     <td>{{ $request->employee->personal_info->fullname }}</td>
                                     <td>{{ $request->type->title }}</td>
                                     <td class="action-buttons">
+
                                         <a href="{{ route('manager.requests.show',['request'=>$request]) }}"
                                            class="view-request-btn">مشاهده درخواست</a>
-                                        <button class="delete-request-btn">حذف</button>
+                                        <button class="delete-request-btn" form="delete-request-{{ $request->id }}">
+                                            حذف
+                                        </button>
+                                        <form
+                                            action="{{ route('manager.requests.destroy',['request' => $request]) }}"
+                                            method="post"
+                                            id="delete-request-{{ $request->id }}"
+                                        >
+                                            @csrf
+                                            @method('DELETE')
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

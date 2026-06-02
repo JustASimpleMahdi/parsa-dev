@@ -21,6 +21,7 @@ Route::middleware(['auth', IsEmployeeMiddleware::class])->prefix('employee')->gr
 });
 
 Route::middleware(['auth', IsManagerMiddleware::class])->prefix('manager')->group(function () {
+    Route::delete('/requests/{request}/destroy', [ManagerRequestController::class, 'destroy'])->name('manager.requests.destroy');
     Route::patch('/requests/{request}/response', [ManagerRequestController::class, 'response'])->name('manager.requests.response');
     Route::get('/requests/{request}', [ManagerRequestController::class, 'show'])->name('manager.requests.show');
 
