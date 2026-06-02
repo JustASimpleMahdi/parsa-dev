@@ -870,7 +870,7 @@ $user = auth()->user();
                     </div>
                     <div id="jobCheckListContainer" class="job-check-list">
                         @foreach($jobOpportunities as $jobOpportunity)
-                            @php($isRequested = $user->job_requests->pluck('job_opportunity_id')->contains($jobOpportunity->id))
+                            @php($isRequested = $user->pending_job_requests->pluck('job_opportunity_id')->contains($jobOpportunity->id))
 
                             @if($isRequested || !$jobOpportunity->is_full)
                                 <label class="job-check-item">

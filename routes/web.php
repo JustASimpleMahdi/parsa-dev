@@ -9,6 +9,7 @@ use App\Http\Controllers\JobOpportunityController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\ManagerAnnouncementController;
 use App\Http\Controllers\ManagerController;
+use App\Http\Controllers\ManagerEmployeeController;
 use App\Http\Controllers\ManagerJobRequestController;
 use App\Http\Controllers\ManagerRequestController;
 use App\Http\Controllers\ManagerRequestTypeController;
@@ -16,6 +17,7 @@ use App\Http\Middleware\IsEmployeeMiddleware;
 use App\Http\Middleware\IsManagerMiddleware;
 use App\Http\Middleware\JobNotRequestedMiddleware;
 use App\Http\Middleware\JobRequestedMiddleware;
+use App\Http\Middleware\ShouldNotBeEmployee;
 use Illuminate\Support\Facades\Route;
 
 /* Employee */
@@ -28,6 +30,9 @@ Route::middleware(['auth', IsEmployeeMiddleware::class])->prefix('employee')->gr
 
 /* Manager */
 Route::middleware(['auth', IsManagerMiddleware::class])->prefix('manager')->group(function () {
+    Route::delete('/employees/{employee}/fire', [ManagerEmployeeController::class, 'destroy'])->name('manager.employees.destroy');
+    Route::get('/employees/{employee}/fire', [ManagerEmployeeController::class, 'fire'])->name('manager.employees.fire');
+
     Route::get('/request-types/{request_type}/delete', [ManagerRequestTypeController::class, 'delete'])->name('manager.request-type.delete');
     Route::resource('/request-types', ManagerRequestTypeController::class)->except(['create'])->names('manager.request-types');
 
@@ -54,7 +59,7 @@ Route::middleware(['auth', IsManagerMiddleware::class])->prefix('manager')->grou
 Route::middleware(['auth'])->get('/personal-info/last-degree/{file}', [FileController::class, 'getPersonalInfoLastDegree'])->name('get-file.personal-info.last-degree');
 Route::middleware(['auth'])->get('/resume/file/{file}', [FileController::class, 'getResumeFile'])->name('get-file.resume.file');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', ShouldNotBeEmployee::class])->group(function () {
     Route::put('/info/edit', [AuthController::class, 'updateInformation'])->name('job-requested.info.edit.update');
     Route::get('/info/edit', [AuthController::class, 'editInformation'])->name('job-requested.info.edit');
     Route::get('/info', [AuthController::class, 'showInformation'])->name('job-requested.info');
@@ -63,17 +68,17 @@ Route::middleware('auth')->group(function () {
     })->name('job-requested');
 });
 
-Route::middleware(['auth', JobNotRequestedMiddleware::class])->group(function () {
+Route::middleware(['auth', JobNotRequestedMiddleware::class, ShouldNotBeEmployee::class])->group(function () {
     Route::post('/register/resume', [AuthController::class, 'storeResumeAndJobRequest'])->name('register.resume.store');
     Route::get('/register/resume', [AuthController::class, 'registerResume'])->name('register.resume');
 });
 
-Route::middleware(JobNotRequestedMiddleware::class)->group(function () {
+Route::middleware([JobNotRequestedMiddleware::class, ShouldNotBeEmployee::class])->group(function () {
     Route::get('/register', [AuthController::class, 'register'])->name('register');
     Route::post('/register', [AuthController::class, 'registerSubmit'])->name('register-submit');
 });
 
-Route::middleware('guest')->group(function () {
+Route::middleware(['guest', ShouldNotBeEmployee::class])->group(function () {
     Route::get('/login', [AuthController::class, 'login'])->name('login');
     Route::post('/login', [AuthController::class, 'loginSubmit'])->name('login-submit');
 });

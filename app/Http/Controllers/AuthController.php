@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\JobRequestStatusEnum;
 use App\Models\File;
 use App\Models\JobOpportunity;
 use App\Models\User;
@@ -19,6 +20,9 @@ class AuthController extends Controller
     public function updateInformation(Request $request)
     {
         $user = auth()->user();
+
+        if ($user->isEmployee() || $user->role === RoleEnum::MANAGER) abort(403);
+
         $validated = $request->validate([
             'firstname' => 'required',
             'lastname' => 'required',
@@ -80,12 +84,23 @@ class AuthController extends Controller
                 ->map(fn($uploadedFile) => FileService::upload($uploadedFile, UploadPathEnum::RESUME->value));
             $user->resume->files()->saveMany($files);
 
-            $newJobRequests = collect($jobRequestValidated['job_opportunities'])
-                ->diff($user->job_requests->pluck('job_opportunity_id'));
 
-            $user->job_requests()->whereNotIn('job_opportunity_id', $jobRequestValidated['job_opportunities'])->delete();
+            $currentJobOpportunities = $user->job_requests->pluck('job_opportunity_id');
+            $wantedJobOpportunities = collect($jobRequestValidated['job_opportunities']);
+
+            $newJobRequests = $wantedJobOpportunities->diff($currentJobOpportunities);
+
+            $updateJobRequests = $currentJobOpportunities->intersect($wantedJobOpportunities)
+                ->map(fn(int $jobOpportunityId) => $user->job_requests->where('job_opportunity_id', $jobOpportunityId)->first());
+
+            $deleteJobRequest = $currentJobOpportunities->diff($wantedJobOpportunities)
+                ->map(fn(int $jobOpportunityId) => $user->pending_job_requests->where('job_opportunity_id', $jobOpportunityId)->first());
+
+            $deleteJobRequest->each->delete();
+
+            $updateJobRequests->each->update(['status' => JobRequestStatusEnum::PENDING]);
+
             $user->job_requests()->createMany($newJobRequests->map(fn($jobOpportunityId) => ['job_opportunity_id' => $jobOpportunityId]));
-
         });
         return redirect()->route('job-requested.info');
     }

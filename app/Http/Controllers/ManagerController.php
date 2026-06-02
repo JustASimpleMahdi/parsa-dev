@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employee;
 use App\Models\JobOpportunity;
 use App\Models\JobRequest;
 use App\Models\Request;
@@ -21,8 +22,10 @@ class ManagerController extends Controller
         $pendingRequests = Request::with(['type', 'employee.personal_info'])->where('status', RequestStatusEnum::PENDING)->get();
         $otherRequests = Request::with(['type', 'employee.personal_info'])->whereNot('status', RequestStatusEnum::PENDING)->get();
 
+        $employees = Employee::with(['personal_info', 'job'])->latest()->get();
+
         return view('manager.index',
-            compact('jobOpportunities', 'jobRequestsCount', 'pendingRequests', 'otherRequests')
+            compact('jobOpportunities', 'jobRequestsCount', 'pendingRequests', 'otherRequests', 'employees')
         );
     }
 }

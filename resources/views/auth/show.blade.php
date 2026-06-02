@@ -852,7 +852,7 @@ $user = auth()->user();
                         <span>درخواست های شغلی :</span>
                     </div>
                     <div class="card-value">
-                        @foreach($user->job_requests as $jobRequest)
+                        @foreach($user->pending_job_requests as $jobRequest)
                             {{ $jobRequest->job_opportunity->title }}<br>
                         @endforeach
                     </div>

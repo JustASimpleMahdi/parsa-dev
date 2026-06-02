@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\JobRequestStatusEnum;
 use App\RegisterStatusEnum;
 use App\RoleEnum;
 use Database\Factories\UserFactory;
@@ -27,6 +28,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     use HasFactory, Notifiable;
     use Authenticatable, Authorizable;
 
+    public function pending_job_requests(): HasMany
+    {
+        return $this->job_requests()->where('status', JobRequestStatusEnum::PENDING);
+    }
     public function job_requests(): HasMany
     {
         return $this->hasMany(JobRequest::class);

@@ -57,7 +57,7 @@ class ManagerJobRequestController extends Controller
 
     public function accept(JobRequest $jobRequest)
     {
-        $jobRequest->load('job_opportunity:title,hired', 'user:id');
+        $jobRequest->load('job_opportunity', 'user');
 
         DB::transaction(function () use ($jobRequest) {
             $jobRequest->update(['status' => JobRequestStatusEnum::ACCEPTED]);

@@ -1011,46 +1011,18 @@
                     </tr>
                     </thead>
                     <tbody>
+                    @foreach($employees as $employee)
+
                     <tr>
-                        <td>مهدی ارکی</td>
-                        <td>React Native Developer</td>
-                        <td>01234567898</td>
+                        <td>{{ $employee->personal_info->fullname }}</td>
+                        <td>{{ $employee->job->title }}</td>
+                        <td>{{ $employee->personal_info->phone }}</td>
                         <td>
-                            <button class="terminate-btn">برکناری</button>
+                            <a href="{{ route('manager.employees.fire',['employee' => $employee]) }}"
+                               class="terminate-btn">برکناری</a>
                         </td>
                     </tr>
-                    <tr>
-                        <td>المیرا حق نظری</td>
-                        <td>فرانت اند جونیور</td>
-                        <td>01478523690</td>
-                        <td>
-                            <button class="terminate-btn">برکناری</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>کوروش خالقی</td>
-                        <td>بک اند دولوپر</td>
-                        <td>09876543210</td>
-                        <td>
-                            <button class="terminate-btn">برکناری</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>زهرا برزگران</td>
-                        <td>متخصص امنیت</td>
-                        <td>07894561230</td>
-                        <td>
-                            <button class="terminate-btn">برکناری</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>یاسمن جاجرمی</td>
-                        <td>بک اند دولوپر</td>
-                        <td>03214569874</td>
-                        <td>
-                            <button class="terminate-btn">برکناری</button>
-                        </td>
-                    </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>
