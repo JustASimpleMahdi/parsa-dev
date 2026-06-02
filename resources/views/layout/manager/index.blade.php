@@ -41,9 +41,9 @@
                 <span>🪪 مشخصات</span>
             </div>
 
-            <div @class(['edit-requests-menu-btn', 'active' => request()->routeIs('manager.edit-requests')])>
+            <a href="{{ route('manager.request-types.index') }}" @class(['menu-item', 'active' => request()->routeIs('manager.request-types.*')])>
                 <span>✏️ ویرایش درخواست‌ها</span>
-            </div>
+            </a>
         </div>
 
         <form action="{{ route('logout') }}" method="post" class="logout-section-bottom">

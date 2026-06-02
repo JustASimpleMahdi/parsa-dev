@@ -11,6 +11,7 @@ use App\Http\Controllers\ManagerAnnouncementController;
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\ManagerJobRequestController;
 use App\Http\Controllers\ManagerRequestController;
+use App\Http\Controllers\ManagerRequestTypeController;
 use App\Http\Middleware\IsEmployeeMiddleware;
 use App\Http\Middleware\IsManagerMiddleware;
 use App\Http\Middleware\JobNotRequestedMiddleware;
@@ -27,6 +28,8 @@ Route::middleware(['auth', IsEmployeeMiddleware::class])->prefix('employee')->gr
 
 /* Manager */
 Route::middleware(['auth', IsManagerMiddleware::class])->prefix('manager')->group(function () {
+    Route::resource('/request-types', ManagerRequestTypeController::class)->except(['create', 'show'])->names('manager.request-types');
+
     Route::resource('announcements', ManagerAnnouncementController::class)->only(['index', 'store'])->names('manager.announcements');
 
     Route::delete('/requests/{request}/destroy', [ManagerRequestController::class, 'destroy'])->name('manager.requests.destroy');
