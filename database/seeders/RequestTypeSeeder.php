@@ -13,12 +13,21 @@ class RequestTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        foreach (DefaultRequestTypeNameEnum::cases() as $enum) {
-            RequestType::create([
-                'title' => $enum->value,
-                'name' => $enum->name,
-                'readonly' => true
-            ]);
-        }
+
+        RequestType::create([
+            'title' => DefaultRequestTypeNameEnum::LEAVE_REQUEST->value,
+            'name' => DefaultRequestTypeNameEnum::LEAVE_REQUEST->name,
+            'readonly' => false
+        ]);
+        RequestType::create([
+            'title' => DefaultRequestTypeNameEnum::BROKEN_REPORT->value,
+            'name' => DefaultRequestTypeNameEnum::BROKEN_REPORT->name,
+            'readonly' => false
+        ]);
+        RequestType::create([
+            'title' => DefaultRequestTypeNameEnum::RESIGNATION_REQUEST->value,
+            'name' => DefaultRequestTypeNameEnum::RESIGNATION_REQUEST->name,
+            'readonly' => true
+        ]);
     }
 }
