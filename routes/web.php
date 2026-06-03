@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmployeeAnnouncementController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\EmployeeProfileController;
 use App\Http\Controllers\EmployeeRequestController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\JobOpportunityController;
@@ -22,6 +23,9 @@ use Illuminate\Support\Facades\Route;
 
 /* Employee */
 Route::middleware(['auth', IsEmployeeMiddleware::class])->prefix('employee')->group(function () {
+    Route::patch('/profile', [EmployeeProfileController::class, 'update'])->name('employee.profile.update');
+    Route::get('/profile', [EmployeeProfileController::class, 'index'])->name('employee.profile.index');
+
     Route::get('/announcements', [EmployeeAnnouncementController::class, 'index'])->name('employee.announcements.index');
 
     Route::resource('requests', EmployeeRequestController::class)->except(['index', 'create', 'show'])->names('employee.requests');

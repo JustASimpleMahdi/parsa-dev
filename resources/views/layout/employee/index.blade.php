@@ -31,7 +31,7 @@
             <a href="{{ route('employee.announcements.index') }}" @class(['menu-item','active'=> request()->routeIs('employee.announcements.*')])>
                 <span>📢 اطلاعیه‌ها</span>
             </a>
-            <a href="{{ route('employee.index') }}" @class(['menu-item','active'=> request()->routeIs('employee.profile')])>
+            <a href="{{ route('employee.profile.index') }}" @class(['menu-item','active'=> request()->routeIs('employee.profile.*')])>
                 <span>🪪 مشخصات</span>
             </a>
         </div>
