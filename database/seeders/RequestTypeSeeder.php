@@ -17,16 +17,19 @@ class RequestTypeSeeder extends Seeder
         RequestType::create([
             'title' => DefaultRequestTypeNameEnum::LEAVE_REQUEST->value,
             'name' => DefaultRequestTypeNameEnum::LEAVE_REQUEST->name,
+            'description' => ' توضیحات درخواست مرخصی(تاریخ ، مدت ، دلیل)...',
             'readonly' => false
         ]);
         RequestType::create([
             'title' => DefaultRequestTypeNameEnum::BROKEN_REPORT->value,
             'name' => DefaultRequestTypeNameEnum::BROKEN_REPORT->name,
+            'description' => 'نوع مشکل ، سیستم مربوطه ، توضیحات کامل...',
             'readonly' => false
         ]);
         RequestType::create([
             'title' => DefaultRequestTypeNameEnum::RESIGNATION_REQUEST->value,
             'name' => DefaultRequestTypeNameEnum::RESIGNATION_REQUEST->name,
+            'description' => 'دلیل استعفا ، هماهنگی های لازم ...',
             'readonly' => true
         ]);
     }

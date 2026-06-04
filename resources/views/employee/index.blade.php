@@ -477,41 +477,18 @@
             <div class="sub-request-label">مدیریت درخواست ها</div>
         </div>
 
-        <!-- کارت درخواست مرخصی با فیلد متنی -->
-        <form action="{{ route('employee.requests.store') }}" method="post" class="card">
-            @csrf
-            <input name="name" value="{{ DefaultRequestTypeNameEnum::LEAVE_REQUEST->name }}" type="hidden">
-            <div class="card-title">درخواست مرخصی</div>
-            <textarea name="text" class="request-input request-textarea"
-                      placeholder=" توضیحات درخواست مرخصی(تاریخ ، مدت ، دلیل)..."></textarea>
-            <div class="card-footer">
-                <button class="submit-request-btn">ارسال درخواست</button>
-            </div>
-        </form>
-
-        <!-- کارت گزارش خرابی با فیلد متنی -->
-        <form action="{{ route('employee.requests.store') }}" method="post" class="card">
-            @csrf
-            <input name="name" value="{{ DefaultRequestTypeNameEnum::BROKEN_REPORT->name }}" type="hidden">
-            <div class="card-title">گزارش خرابی</div>
-            <textarea name="text" class="request-input request-textarea"
-                      placeholder="نوع مشکل ، سیستم مربوطه ، توضیحات کامل..."></textarea>
-            <div class="card-footer">
-                <button class="submit-request-btn">ارسال درخواست</button>
-            </div>
-        </form>
-
-        <!-- کارت درخواست استعفا با فیلد متنی -->
-        <form action="{{ route('employee.requests.store') }}" method="post" class="card">
-            @csrf
-            <input name="name" value="{{ DefaultRequestTypeNameEnum::RESIGNATION_REQUEST->name }}" type="hidden">
-            <div class="card-title">درخواست استعفا</div>
-            <textarea name="text" class="request-input request-textarea"
-                      placeholder="دلیل استعفا ، هماهنگی های لازم ..."></textarea>
-            <div class="card-footer">
-                <button class="submit-request-btn">ارسال درخواست</button>
-            </div>
-        </form>
+        @foreach($requestTypes as $type)
+            <form action="{{ route('employee.requests.store') }}" method="post" class="card">
+                @csrf
+                <input name="name" value="{{ $type->name }}" type="hidden">
+                <div class="card-title">{{ $type->title }}</div>
+                <textarea name="text" class="request-input request-textarea"
+                          placeholder="{{ $type->description }}"></textarea>
+                <div class="card-footer">
+                    <button class="submit-request-btn">ارسال درخواست</button>
+                </div>
+            </form>
+        @endforeach
 
         <!-- لیست درخواست‌های جاری بدون تغییر -->
         <div class="card">

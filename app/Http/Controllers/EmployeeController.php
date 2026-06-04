@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
+use App\Models\RequestType;
 
 class EmployeeController extends Controller
 {
@@ -10,6 +11,7 @@ class EmployeeController extends Controller
     {
         $employee = Employee::where('user_id', auth()->user()->id)->first();
         $requests = $employee->requests()->with('type', 'response')->latest()->get();
-        return view('employee.index', compact('requests'));
+        $requestTypes = RequestType::all();
+        return view('employee.index', compact('requests', 'requestTypes'));
     }
 }
