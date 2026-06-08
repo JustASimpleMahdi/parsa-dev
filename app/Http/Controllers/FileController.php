@@ -18,7 +18,7 @@ class FileController extends Controller
     public function getPersonalInfoLastDegree(File $file)
     {
         $user = auth()->user();
-        if (!($user->role === RoleEnum::MANAGER || $user->personal_info->personal_image->id === $file->id)) abort(403);
+        if (!($user->role === RoleEnum::MANAGER || $user->personal_info->last_degree->id === $file->id)) abort(403);
         return Storage::disk($file->disk)->download($file->path, $file->filename);
     }
 }
