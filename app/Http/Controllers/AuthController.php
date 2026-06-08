@@ -94,7 +94,8 @@ class AuthController extends Controller
                 ->map(fn(int $jobOpportunityId) => $user->job_requests->where('job_opportunity_id', $jobOpportunityId)->first());
 
             $deleteJobRequest = $currentJobOpportunities->diff($wantedJobOpportunities)
-                ->map(fn(int $jobOpportunityId) => $user->pending_job_requests->where('job_opportunity_id', $jobOpportunityId)->first());
+                ->map(fn(int $jobOpportunityId) => $user->pending_job_requests->where('job_opportunity_id', $jobOpportunityId)->first())
+                ->whereNotNull();
 
             $deleteJobRequest->each->delete();
 
