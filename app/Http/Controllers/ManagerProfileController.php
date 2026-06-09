@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Employee;
 use Hash;
 use Illuminate\Http\Request;
 
-class EmployeeProfileController extends Controller
+class ManagerProfileController extends Controller
 {
     public function index()
     {
-        $employee = Employee::with(['personal_info', 'job'])->where('user_id', auth()->user()->id)->first();
-        return view('employee.profile.index', compact('employee'));
+        $manager = auth()->user();
+        return view('manager.profile.index', compact('manager'));
     }
 
     public function update(Request $request)

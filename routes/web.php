@@ -12,6 +12,7 @@ use App\Http\Controllers\ManagerAnnouncementController;
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\ManagerEmployeeController;
 use App\Http\Controllers\ManagerJobRequestController;
+use App\Http\Controllers\ManagerProfileController;
 use App\Http\Controllers\ManagerRequestController;
 use App\Http\Controllers\ManagerRequestTypeController;
 use App\Http\Middleware\IsEmployeeMiddleware;
@@ -34,6 +35,9 @@ Route::middleware(['auth', IsEmployeeMiddleware::class])->prefix('employee')->gr
 
 /* Manager */
 Route::middleware(['auth', IsManagerMiddleware::class])->prefix('manager')->group(function () {
+    Route::patch('/profile', [ManagerProfileController::class, 'update'])->name('manager.profile.update');
+    Route::get('/profile', [ManagerProfileController::class, 'index'])->name('manager.profile.index');
+
     Route::delete('/employees/{employee}/fire', [ManagerEmployeeController::class, 'destroy'])->name('manager.employees.destroy');
     Route::get('/employees/{employee}/fire', [ManagerEmployeeController::class, 'fire'])->name('manager.employees.fire');
 

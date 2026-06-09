@@ -37,9 +37,9 @@
                 <span>📢 اطلاعیه‌ها</span>
             </a>
 
-            <div @class(['menu-item', 'active' => request()->routeIs('manager.profile')])>
+            <a href="{{ route('manager.profile.index') }}" @class(['menu-item', 'active' => request()->routeIs('manager.profile')])>
                 <span>🪪 مشخصات</span>
-            </div>
+            </a>
 
             <a href="{{ route('manager.request-types.index') }}" @class(['menu-item', 'active' => request()->routeIs('manager.request-types.*')])>
                 <span>✏️ ویرایش درخواست‌ها</span>
