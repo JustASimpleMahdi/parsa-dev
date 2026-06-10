@@ -1,3 +1,5 @@
+@import "Vazirmatn-Variable-font-face.css";
+
 * {
     margin: 0;
     padding: 0;
@@ -17,7 +19,7 @@ html {
 }
 
 a {
-    text-decoration: none !important; 
+    text-decoration: none !important;
 }
 
 .container {
