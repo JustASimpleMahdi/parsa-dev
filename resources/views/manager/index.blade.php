@@ -163,6 +163,7 @@
         }
 
         .logout-text {
+            all:unset;
             display: flex;
             align-items: center;
             justify-content: flex-start;
@@ -174,9 +175,13 @@
             font-weight: 700;
             font-size: 1rem;
             width: 100%;
+            box-sizing: border-box;
             background: transparent;
             border-radius: 18px;
             text-align: right;
+        }
+        a{
+            text-decoration: none;
         }
 
         .logout-text i {

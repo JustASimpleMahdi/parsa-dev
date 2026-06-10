@@ -20,6 +20,9 @@
             line-height: 1.6;
         }
 
+        a{
+            text-decoration: none;
+        }
         .login-modal-container {
             position: fixed;
             top: 0;
@@ -136,6 +139,7 @@
         .forgot-link {
             text-align: right;
             width: 100%;
+            text-decoration: none;
         }
 
         .forgot-link a {
@@ -146,6 +150,7 @@
             background: none;
             border: none;
             display: inline-block;
+            text-decoration: none;
         }
 
         .forgot-link a:hover {

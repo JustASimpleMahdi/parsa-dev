@@ -23,15 +23,15 @@ class ManagerSeeder extends Seeder
         ]);
 
         $user->personal_info()->create([
-            'firstname' => 'محمد',
-            'lastname' => 'ایرانی',
-            'father_name' => 'نمیدونم',
-            'birthdate' => '1382/08/02',
-            'birthplace' => 'شیروان',
+            'firstname' => 'مبین',
+            'lastname' => 'یزدانی',
+            'father_name' => 'محمد',
+            'birthdate' => '1362/04/02',
+            'birthplace' => 'بجنورد',
             'id_number' => '0123456789',
             'national_code' => '0123456789',
             'phone' => '09933456574',
-            'address' => 'شیروان',
+            'address' => 'بجنورد - شریعتی 2 - پلاک 16',
             'postal_code' => '0123245678',
             'personal_image_file_id' => File::create([
                 'name' => 'test1',

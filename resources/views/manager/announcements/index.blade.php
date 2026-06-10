@@ -157,6 +157,7 @@
         }
 
         .logout-text {
+            all:unset;
             display: flex;
             align-items: center;
             justify-content: flex-start;
@@ -168,6 +169,7 @@
             font-weight: 700;
             font-size: 1rem;
             width: 100%;
+            box-sizing: border-box;
             background: transparent;
             border-radius: 18px;
             text-align: right;
@@ -178,7 +180,9 @@
             transform: translateX(-5px);
             color: #ff7b7b;
         }
-
+        a{
+            text-decoration: none;
+        }
         .edit-requests-menu-btn {
             display: flex;
             align-items: center;

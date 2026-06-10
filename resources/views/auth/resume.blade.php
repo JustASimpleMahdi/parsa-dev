@@ -95,6 +95,7 @@
             cursor: pointer;
             color: #6DCCF0;
             transition: 0.2s;
+            text-decoration: none;
         }
 
         .close-resume:hover {
@@ -232,7 +233,7 @@
             width: 22px;
             height: 22px;
             background-color: #FFFFFF;
-            border-radius: 50%;
+            border-radius: 0;
             transition: all 0.2s ease;
             border: 1px solid #475569;
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
@@ -333,6 +334,26 @@
                 padding: 20px;
             }
         }
+.error-simple {
+    color: #ff6b6b;
+    font-size: 14px;
+    text-align: center;
+    background: rgba(255, 107, 107, 0.1);
+    padding: 12px;
+    border-radius: 12px;
+    border-right: 3px solid #ff6b6b;
+    font-weight: 500;
+    width: auto;
+    display: none;
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1001;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    backdrop-filter: blur(8px);
+    white-space: nowrap;
+}
     </style>
 </head>
 
@@ -400,8 +421,35 @@
                 <button id="submitResumeBtn">تکمیل ثبت نام و ارسال درخواست</button>
             </div>
         </form>
+            <div id="resumeError" class="error-simple" style="display: none;"></div>
+<div class="resume-options">
+    ...
+</div>
     </div>
 </div>
+
+<script>
+document.querySelector('form').addEventListener('submit', function(e) {
+    let fileInput = document.getElementById('resumeFile');
+    let textArea = document.getElementById('resumeText');
+    let hasFile = fileInput.files.length > 0;
+    let hasText = textArea.value.trim() !== '';
+    let errorDiv = document.getElementById('resumeError');
+    
+    if(!hasFile && !hasText) {
+        errorDiv.style.display = 'block';
+        errorDiv.innerHTML = 'حداقل یکی از روش‌های ارسال رزومه را پر کنید';
+        e.preventDefault();
+        
+        // بعد ۳ ثانیه محو بشه
+        setTimeout(function() {
+            errorDiv.style.display = 'none';
+        }, 3000);
+    } else {
+        errorDiv.style.display = 'none';
+    }
+});
+</script>
 </body>
 
 </html>

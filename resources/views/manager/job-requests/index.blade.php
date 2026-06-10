@@ -369,6 +369,9 @@
                 font-size: 0.9rem;
             }
         }
+        a{
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>

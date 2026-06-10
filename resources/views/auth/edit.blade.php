@@ -406,7 +406,9 @@
             font-size: 0.95rem;
             margin-top: 8px;
         }
-
+        a{
+            text-decoration: none;
+        }
         /* استایل جدید برای ردیف آپلود فایل */
         .file-upload-row {
             display: flex;
@@ -589,7 +591,6 @@
             width: 22px;
             height: 22px;
             background-color: #FFFFFF;
-            border-radius: 50%;
             transition: all 0.2s ease;
             border: 1px solid #475569;
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
@@ -714,6 +715,95 @@
             display: flex;
             justify-content: end;
         }
+        /* استایل فیلدهای ورودی */
+.info-value input[type="text"],
+.info-value input[type="password"],
+.info-value input[type="file"] {
+    width: 100%;
+    padding: 10px 14px;
+    background-color: #113E4F;
+    border: 1px solid #27ECAB;
+    border-radius: 12px;
+    color: #FFFFFF;
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.info-value input[type="text"]:focus,
+.info-value input[type="password"]:focus {
+    border-color: #6DCCF0;
+    box-shadow: 0 0 0 3px rgba(109, 204, 240, 0.2);
+    background-color: #0e3442;
+}
+
+.info-value input[type="text"]:hover,
+.info-value input[type="password"]:hover {
+    border-color: #6DCCF0;
+}
+
+/* استایل مخصوص فایل آپلود */
+.info-value input[type="file"] {
+    padding: 8px;
+    background-color: #113E4F;
+    border: 2px dashed #27ECAB;
+    cursor: pointer;
+}
+
+.info-value input[type="file"]::-webkit-file-upload-button {
+    background-color: #27ECAB;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 16px;
+    color: #1F2943;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 12px;
+    transition: all 0.2s;
+}
+
+.info-value input[type="file"]::-webkit-file-upload-button:hover {
+    background-color: #1bcb90;
+    transform: scale(0.98);
+}
+
+/* استایل برای textarea (متن رزومه) */
+textarea {
+    width: 100%;
+    padding: 12px;
+    background-color: #113E4F;
+    border: 1px solid #27ECAB;
+    border-radius: 12px;
+    color: #FFFFFF;
+    font-size: 0.95rem;
+    font-family: inherit;
+    resize: vertical;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+textarea:focus {
+    border-color: #6DCCF0;
+    box-shadow: 0 0 0 3px rgba(109, 204, 240, 0.2);
+    background-color: #0e3442;
+}
+
+/* استایل برای چک‌باکس‌های حذف فایل */
+.info-value input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-left: 8px;
+    accent-color: #27ECAB;
+    cursor: pointer;
+    transform: translateY(2px);
+}
+
+/* استایل لیبل کنار چک‌باکس */
+.info-value span {
+    color: #FFFFFF;
+    font-size: 0.9rem;
+}
     </style>
 </head>
 

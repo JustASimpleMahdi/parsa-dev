@@ -6,7 +6,9 @@
             padding: 0;
             box-sizing: border-box;
         }
-
+        a{
+            text-decoration: none;
+        }
         body {
             font-family: 'Vazirmatn', 'Segoe UI', monospace;
             background: #1F2943;
@@ -169,6 +171,7 @@
         }
 
         .logout-text {
+            all:unset;
             display: flex;
             align-items: center;
             justify-content: flex-start;
@@ -180,6 +183,7 @@
             font-weight: 700;
             font-size: 1rem;
             width: 100%;
+            box-sizing: border-box;
             background: transparent;
             border-radius: 18px;
             text-align: right;

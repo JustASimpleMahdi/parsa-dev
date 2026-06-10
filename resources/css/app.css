@@ -17,7 +17,7 @@ html {
 }
 
 a {
-    text-decoration: none;
+    text-decoration: none !important; 
 }
 
 .container {
@@ -117,9 +117,9 @@ a {
 }
 
 .btn-register:hover {
-    background: #27ECAB;
+    background:rgba(135, 225, 213, 0.4);
     transform: scale(0.98);
-    box-shadow: 0 0 12px rgba(45, 212, 191, 0.4);
+    box-shadow: 0 0 12px rgba(135, 225, 213, 0.4);
 }
 
 .btn-logout {
@@ -704,3 +704,4 @@ footer {
 .back-link:hover {
     color: #27ECAB;
 }
+/* استایل فرم و خطاها */

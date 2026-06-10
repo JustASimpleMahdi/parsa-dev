@@ -19,7 +19,7 @@
             <a href="{{ route('manager.announcements.index') }}" class="notification-icon">
                 <i class="fas fa-bell"></i>
             </a>
-            <div class="avatar-circle">👤</div>
+            <a href="{{ route ('manager.profile.index')}}" class="avatar-circle">👤</a>
         </div>
     </div>
 </div>

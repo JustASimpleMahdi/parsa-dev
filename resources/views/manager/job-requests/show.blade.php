@@ -11,6 +11,9 @@
             padding: 0;
             box-sizing: border-box;
         }
+        a{
+            text-decoration: none;
+        }
 
         body {
             font-family: 'Vazirmatn', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -179,7 +182,7 @@
         .accept-btn {
             background-color: #27ECAB;
             color: #707070;
-            border: 2px solid #707070;
+            border: 2px solid #1F2943;
             padding: 12px 40px;
             font-size: 1.1rem;
             font-weight: 700;
@@ -196,9 +199,9 @@
         }
 
         .reject-btn {
-            background-color: #707070;
+            background-color: #D85656;
             color: #27ECAB;
-            border: 2px solid #27ECAB;
+            border: 2px solid #1F2943;
             padding: 12px 40px;
             font-size: 1.1rem;
             font-weight: 700;

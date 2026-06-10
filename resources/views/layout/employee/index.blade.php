@@ -8,6 +8,11 @@
     <!-- Font Awesome 6 (only essential icons) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     @stack('styles')
+    <style>
+        a{
+            text-decoration: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -17,7 +22,7 @@
         <a href="{{ route('index') }}" class="logo">PARSA_DEV</a>
         <div class="nav-actions">
             @include('layout.employee.announcement-icon')
-            <div class="avatar-circle">👤</div>
+            <a href="{{ route ('employee.profile.index')}}" class="avatar-circle">👤</a>
         </div>
     </div>
 </div>

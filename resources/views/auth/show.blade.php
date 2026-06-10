@@ -220,12 +220,28 @@
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 8px;
-            }
+            }}
 
             .edit-btn {
-                max-width: 100%;
-            }
-        }
+    background-color: #27ECAB;
+    color: #1F2943;
+    border: none;
+    padding: 0.8rem 2.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+    width: 100%;
+    max-width: 200px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-sizing: border-box;
+}
 
         /* خط پایانی */
         .footer-note {
@@ -713,6 +729,9 @@
             color: #6DCCF0;
             display: flex;
             justify-content: end;
+        }
+        a{
+            text-decoration: none;
         }
     </style>
 </head>
