@@ -160,6 +160,9 @@
             font-family: inherit;
             transition: all 0.2s ease;
         }
+        a{
+            text-decoration: none;
+        }
 
         .edit-btn {
             background-color: #6DCCF0;

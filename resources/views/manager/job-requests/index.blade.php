@@ -143,7 +143,7 @@
         .requests-table td:nth-child(2) .job-text {
             display: block;
             direction: rtl;
-            text-align: right;
+            text-align: center;
         }
 
         .requests-table td:last-child {

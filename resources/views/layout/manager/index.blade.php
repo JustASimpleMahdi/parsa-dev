@@ -43,7 +43,7 @@
             </a>
 
             <a href="{{ route('manager.request-types.index') }}" @class(['menu-item', 'active' => request()->routeIs('manager.request-types.*')])>
-                <span>✏️ ویرایش درخواست‌ها</span>
+                <span>✏️ نوع درخواست‌ها</span>
             </a>
         </div>
 

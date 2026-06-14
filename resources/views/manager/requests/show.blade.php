@@ -23,6 +23,9 @@
             align-items: center;
             padding: 1rem;
         }
+        a{
+            text-decoration: none;
+        }
 
         .card {
             background: #113E4F;

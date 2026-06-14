@@ -12,6 +12,9 @@
             padding: 0;
             box-sizing: border-box;
         }
+        a{
+            text-decoration: none;
+        }
 
         body {
             font-family: 'Vazirmatn', 'Segoe UI', system-ui, monospace;

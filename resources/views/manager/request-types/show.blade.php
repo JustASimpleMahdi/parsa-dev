@@ -34,6 +34,9 @@
             padding: 32px 28px;
         }
 
+        a{
+            text-decoration: none;
+        }
         .card-header {
             display: flex;
             justify-content: space-between;

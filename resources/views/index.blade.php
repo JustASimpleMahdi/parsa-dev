@@ -40,7 +40,7 @@
                     </form>
                 @else
                     <a href="{{ route('login') }}" class="btn-login">ورود</a>
-                    <a href="{{ route('register') }}" class="btn-register">ثبت نام</a>
+                    <a href="{{ route('register') }}" class="btn-register" style="color: #221A44;">ثبت نام</a>
                 @endauth
             </div>
         </div>
